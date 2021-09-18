@@ -105,6 +105,12 @@ npm run start:dev
 
 depedency injection :
 npm i @nestjs/typeorm typeorm mysql2 @nestjs/config
+
+---info
+@nestjs/typeorm typeorm = https://docs.nestjs.com/recipes/sql-typeorm
+mysql2 = mysql driver
+@nestjs/config  = untuk config .env
+ 
 ```
 
 ## REFERENSI :
