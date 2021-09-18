@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -16,7 +17,7 @@ import { UserModule } from './user/user.module';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities : [
-
+        User // jangan lupa tambahin setelah selesai buat user.entity.js
       ],
       synchronize : true // entity yang dibuat tablenya akan otomatis di generate
     }),
