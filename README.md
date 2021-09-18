@@ -150,9 +150,12 @@ data transfer object = https://docs.nestjs.com/controllers
 ```bash
 //006
 ---info
-inject repository user (entity user), agar pembuatan memudahkan membuat CRUD
+inject repository user (entity user), agar memudahkan ketika membuat CRUD
 ---/info
 ```
+
+
+next video 21:10
 
 ## REFERENSI :
 
