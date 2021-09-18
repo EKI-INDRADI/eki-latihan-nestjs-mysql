@@ -92,12 +92,12 @@ nest --version
 ## 3. CLI
 
 ```bash
+generate project :
 nest new rnd-nestjs-mysql
-
-cd rnd-nestjs-mysql
-
 npm
 
+run project :
+cd rnd-nestjs-mysql
 npm run start
 npm run start:dev
 ```
