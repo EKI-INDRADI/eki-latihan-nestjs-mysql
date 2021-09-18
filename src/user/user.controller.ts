@@ -8,7 +8,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto) { // pada saat generate end point Y sudah automatic ter set DTO
     return this.userService.create(createUserDto);
   }
 
