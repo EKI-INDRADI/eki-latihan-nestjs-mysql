@@ -3,7 +3,14 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+// url = http://localhost
+// + 
+// src\main.ts
+// url = http://localhost:3000
+// +
 @Controller('user')
+// url = http://localhost:3000/user
+
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

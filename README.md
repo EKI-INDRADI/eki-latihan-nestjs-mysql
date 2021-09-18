@@ -74,6 +74,8 @@ Nest is [MIT licensed](LICENSE).
 
 ##  EKI NOTE :
 
+"disini saya tambahkan pemahaman typescript saya & beberapa informasi penting dari video tutorial pada comment code"
+
 ## 1. install Docker, Phpmyadmin & Mariadb
 
 ```bash
@@ -142,6 +144,13 @@ setelah entity selesai di buat maka pada database simple_pos akan otomatis terbu
 //005
 ---info
 data transfer object = https://docs.nestjs.com/controllers
+---/info
+```
+
+```bash
+//006
+---info
+inject repository user (entity user), agar pembuatan memudahkan membuat CRUD
 ---/info
 ```
 
