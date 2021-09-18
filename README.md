@@ -136,7 +136,13 @@ npm run start:dev
 npm run start:dev = untuk running project,
 setelah entity selesai di buat maka pada database simple_pos akan otomatis terbuat tabel user
 ---/info
+```
 
+```bash
+//005
+---info
+data transfer object = https://docs.nestjs.com/controllers
+---/info
 ```
 
 ## REFERENSI :
