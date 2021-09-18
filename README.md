@@ -94,6 +94,7 @@ nest --version
 ## 3. CLI
 
 ```bash
+//001
 generate project :
 nest new rnd-nestjs-mysql
 npm
@@ -102,7 +103,10 @@ run project :
 cd rnd-nestjs-mysql
 npm run start
 npm run start:dev
+```
 
+```bash
+//002
 depedency injection :
 npm i @nestjs/typeorm typeorm mysql2 @nestjs/config
 
@@ -110,7 +114,19 @@ npm i @nestjs/typeorm typeorm mysql2 @nestjs/config
 @nestjs/typeorm typeorm = https://docs.nestjs.com/recipes/sql-typeorm
 mysql2 = mysql driver
 @nestjs/config  = untuk config .env
- 
+---/info
+```
+
+```bash
+//003
+nest g res user
+REST API
+generate end-point Y
+
+---info
+nest generate resource user = generate user module https://docs.nestjs.com/recipes/crud-generator
+---/info
+
 ```
 
 ## REFERENSI :
