@@ -134,7 +134,7 @@ nest generate resource user = generate user module https://docs.nestjs.com/recip
 npm run start:dev
 ---info
 npm run start:dev = untuk running project,
-setelah entity selesai di buat maka pada database simple_post akan otomatis terbuat tabel user
+setelah entity selesai di buat maka pada database simple_pos akan otomatis terbuat tabel user
 ---/info
 
 ```
