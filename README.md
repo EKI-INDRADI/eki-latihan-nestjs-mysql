@@ -78,6 +78,8 @@ Nest is [MIT licensed](LICENSE).
 
 ```bash
 https://github.com/EKI-INDRADI/eki-latihan-docker-phpmyadmin-mariadb
+
+create db simple_pos
 ```
 
 ## 2. install nodejs & nestjs
@@ -100,6 +102,9 @@ run project :
 cd rnd-nestjs-mysql
 npm run start
 npm run start:dev
+
+depedency injection :
+npm i @nestjs/typeorm typeorm mysql2 @nestjs/config
 ```
 
 ## REFERENSI :
