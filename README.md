@@ -252,7 +252,7 @@ export class UserDto {
 }
 ---/info
 
----bug info & buf fix
+---bug info & bug fix
 disini saya menemukan bug :
   "@nestjs/swagger": "^5.0.9",
   "swagger-ui-express": "^4.1.6",
@@ -280,7 +280,7 @@ edit nest-cli.json
 
 }
 
---/bug info
+---/bug info & bug fix
 ```
 
 
