@@ -1,4 +1,5 @@
-import { PartialType } from '@nestjs/mapped-types';
+// import { PartialType } from '@nestjs/mapped-types'; // sebelum swagger, masih menggunakan milik @nestjs/mapped-types
+import { PartialType } from '@nestjs/swagger'; // setelah swagger, menggunakan milik @nestjs/swagger (mendukung swagger)
 import { CreateUserDto, UserDto } from './create-user.dto';
 
 export class UpdateUserDto extends PartialType(UserDto) {} 

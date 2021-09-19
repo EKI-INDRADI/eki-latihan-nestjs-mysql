@@ -1,5 +1,6 @@
 import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -20,6 +21,21 @@ async function bootstrap() {
     //=============== /ERROR MESSAGE TO OBJECT DETAIL VALIDATION
 
   })) // middleware
+
+  //============== SWAGGER
+  const configSwagger = new DocumentBuilder()
+    .setTitle('OPEN-API POS')
+    .setDescription('Documentasi untuk api point of sale')
+    .setVersion('1.3')
+    .build()
+
+  const configCustomSwagger: SwaggerCustomOptions = {
+    swaggerOptions: { docExpansion: "none" }
+  }
+  const swaggerDocument = SwaggerModule.createDocument(app, configSwagger)
+  SwaggerModule.setup('api-docs', app, swaggerDocument, configCustomSwagger)
+  // api-docs = routes
+  //============== /SWAGGER
   await app.listen(3000);
 }
 bootstrap();

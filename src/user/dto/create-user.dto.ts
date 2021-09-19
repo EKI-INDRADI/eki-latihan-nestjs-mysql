@@ -6,12 +6,15 @@ import { User } from "../entities/user.entity"
 //=================== @IsUnique
 //=================== @IsExist
 import { IsExist } from "src/etc/validator/exist-validator"
-import { OmitType, PickType } from "@nestjs/mapped-types"
 //=================== @IsExist
+// import { OmitType, PickType } from "@nestjs/mapped-types" // sebelum swagger, masih menggunakan milik @nestjs/mapped-types
+import { OmitType, PickType } from "@nestjs/swagger" // setelah swagger, menggunakan milik @nestjs/swagger (mendukung swagger)
 
+import { ApiProperty } from "@nestjs/swagger"
 export class UserDto { // DTO data transfer object (schema) untuk keperluan controller //https://docs.nestjs.com/controllers
+    @ApiProperty() // BUG FIX SWAGGER VS CLASS-VALIDATOR pastikan tidak ada space enter agar swagger jalan diantara @ApiProperty()
     @IsOptional()
-    @IsExist([User,'id'])
+    @IsExist([User, 'id'])
     id?: number  // ? = optional
 
     @IsString()
@@ -21,7 +24,7 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
     nama_user: string
 
     @IsEmail()
-    @IsUnique([User,'email']) // src\etc\validator\unique-validator.ts
+    @IsUnique([User, 'email']) // src\etc\validator\unique-validator.ts
     @MaxLength(32)
     @MinLength(6)
     @IsNotEmpty()
@@ -31,7 +34,7 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
     @MaxLength(32)
     @MinLength(8)
     @IsNotEmpty()
-    @IsUnique([User,'username']) // src\etc\validator\unique-validator.ts
+    @IsUnique([User, 'username']) // src\etc\validator\unique-validator.ts
     username: string
 
     @IsString()
@@ -46,7 +49,7 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
 
 // extends = copy class
 // OmitType(UserDto,['id']) = membuang hanya object id  / hapus object id
-export class CreateUserDto extends OmitType(UserDto,['id']){}
+export class CreateUserDto extends OmitType(UserDto, ['id']) { }
 
 // PickType(UserDto,['id']) = mengambil hanya object id , yang lainnya tidak digunakan
-export class UserIdDto extends PickType(UserDto,['id']){}
+export class UserIdDto extends PickType(UserDto, ['id']) { }

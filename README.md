@@ -225,9 +225,63 @@ response :
     "error": "Bad Request"
 }
 ---/info
-
 ```
 
+```bash
+//011
+
+npm i @nestjs/swagger 
+npm i swagger-ui-express
+
+---info
+openapi documentation, digunakan untuk membuat dokumentasi API, https://docs.nestjs.com/openapi/introduction ,
+konfigurasi routes swagger src\main.ts
+http://localhost:3000/api-docs/  ,
+dan yang keren dari nestJs, ada auto generate swagger
+
+-- auto generate swagger controller -- 
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('User') // AUTO GENERATE OPEN API SWAGGER  , langsung jadi dokumentasi
+
+-- auto generate swagger property -- 
+import { ApiProperty } from "@nestjs/swagger"
+export class UserDto { 
+    @ApiProperty()
+    ...
+    ...
+}
+---/info
+
+---bug info & buf fix
+disini saya menemukan bug :
+  "@nestjs/swagger": "^5.0.9",
+  "swagger-ui-express": "^4.1.6",
+  "class-transformer": "^0.4.0",
+  "class-validator": "^0.13.1",
+src\user\dto\create-user.dto.ts
+BUG schema swagger karena SWAGGER VS CLASS-VALIDATOR , 
+kadang terjadi masalah pada @ApiProperty() (swagger) vs (class-validator) ,
+BUG schema swagger tidak muncul
+
+cara fix nya
+referensi : https://github.com/nestjs/swagger/issues/459
+edit nest-cli.json
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@nestjs/swagger/plugin"
+      }
+    ]
+  }
+
+}
+
+--/bug info
+```
 
 
 ## REFERENSI :
