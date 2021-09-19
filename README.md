@@ -93,7 +93,7 @@ npm i -g @nestjs/cli
 nest --version
 ```
 
-## 3. CLI
+## 3. CLI & note
 
 ```bash
 //001
