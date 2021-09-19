@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
@@ -15,6 +16,7 @@ export class UserService {
   ) { }
 
   create(createUserDto: CreateUserDto) {
+    createUserDto.password = this.hash(createUserDto.password)
     return this.userRepo.save(createUserDto); // panggil generic class user  (schema) untuk melakukan create
   }
 
@@ -28,7 +30,10 @@ export class UserService {
 
   update(id: number, updateUserDto: UpdateUserDto) {
     updateUserDto.id = id // inject id (berdasarkan request) , maka kondisi akan update
-    return this.userRepo.save(updateUserDto); 
+    if (updateUserDto.password) {
+      updateUserDto.password = this.hash(updateUserDto.password)
+    }
+    return this.userRepo.save(updateUserDto);
     // jika pada object/value dari .save memiliki ID sama  & kondisnya sama dengan existing maka akan replace.
     // tetapi jika tidak ada id maka otomatis akan create baru
   }
@@ -37,4 +42,16 @@ export class UserService {
     let user = await this.userRepo.findOne(id) // cari data berdasarkan id request
     return this.userRepo.remove(user); // jika di temukan maka hapus
   }
+
+  hash(plaintextPassword) {
+    // const hash = bcrypt.hash(plaintextPassword, 10) // jika hash return nya berupa promise
+    const hash = bcrypt.hashSync(plaintextPassword, 10)
+    return hash
+  }
+
+  compare(plaintextPassword, hashPassword) {
+    const valid = bcrypt.compareSync(plaintextPassword, hashPassword)
+    return valid
+  }
+
 }

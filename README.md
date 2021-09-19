@@ -164,6 +164,16 @@ kedua dependecy tersebut berguna untuk request validation pada API, validasi req
 ---/info
 ```
 
+```bash
+//008
+npm install -g node-gyp (perlu di install ketika npm i bcrypt , error/stuck node-pre-gyp install --fallback-to-build )
+npm i bcrypt
+npm i -D @types/bcrypt
+---info
+encryption dan hash : https://docs.nestjs.com/security/encryption-and-hashing
+---/info
+```
+
 
 next video 21:10
 
