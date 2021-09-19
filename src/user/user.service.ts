@@ -42,6 +42,12 @@ export class UserService {
     let user = await this.userRepo.findOne(id) // cari data berdasarkan id request
     return this.userRepo.remove(user); // jika di temukan maka hapus
   }
+  // setelah ada fitur IsExist src\etc\validator\exist-validator.ts 
+  // ketika telah berhasil dihapus misalkan id 8
+  // maka ketika menghapus id 8 kembali akan error ExceptionHandler
+  // karena tidak adanya nilai yang ingin dihapus 
+  // cara penanganannya adalah selanjutnya akan di bahas
+
 
   hash(plaintextPassword) {
     // const hash = bcrypt.hash(plaintextPassword, 10) // jika hash return nya berupa promise

@@ -1,4 +1,8 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator"
+//=================== @IsExist
+import { IsExist } from "src/etc/validator/exist-validator"
+import { User } from "../entities/user.entity"
+//=================== @IsExist
 
 export class CreateUserDto { // DTO data transfer object (schema) untuk keperluan controller //https://docs.nestjs.com/controllers
     @IsOptional()
@@ -11,6 +15,7 @@ export class CreateUserDto { // DTO data transfer object (schema) untuk keperlua
     nama_user: string
 
     @IsEmail()
+    @IsExist([User,'email']) // src\etc\validator\exist-validator.ts
     @MaxLength(32)
     @MinLength(6)
     @IsNotEmpty()
@@ -20,6 +25,7 @@ export class CreateUserDto { // DTO data transfer object (schema) untuk keperlua
     @MaxLength(32)
     @MinLength(8)
     @IsNotEmpty()
+    @IsExist([User,'username']) // src\etc\validator\exist-validator.ts
     username: string
 
     @IsString()

@@ -7,8 +7,11 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true, // validasi berdasarkan DTO
     forbidUnknownValues: true,
-    transform: true, //  supaya ada message object errornya.
-
+    transform: true, //  supaya ada message errornya.
+    validateCustomDecorators: true, // karena ada validasi buatan sendiri, IsExist src/etc/validator/exist-validator, pada src\user\dto\create-user.dto.ts
+    transformOptions: {  // karena ada validasi buatan sendiri, sda
+      enableImplicitConversion: true  // karena ada validasi buatan sendiri, sda
+    }
     //=============== ERROR MESSAGE TO OBJECT DETAIL VALIDATION
     // import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/common';
     // exceptionFactory: (validationErrors: ValidationError[] = []) => {
