@@ -185,10 +185,10 @@ karena error handle yang tidak detail pada class validator,
 maka diperlukanya manual duplicate validator 
 ---/info
 
-nest g provider etc/validator/exist-validator
+nest g provider etc/validator/unique-validator
 
 ---info
-nest g provider = membuat class / provider yang nantinya akan di panggil kembali (manual validasi unique / exist)
+nest g provider = membuat class / provider yang nantinya akan di panggil kembali (manual validasi unique)
 
 hasil result :
 {
@@ -199,6 +199,13 @@ hasil result :
     ],
     "error": "Bad Request"
 }
+---/info
+
+
+nest g provider etc/validator/exist-validator
+
+---info
+copy dari unique-validator
 ---/info
 
 ```

@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 import { ExistValidator } from './etc/validator/exist-validator';
+import { UniqueValidator } from './etc/validator/unique-validator';
 
 @Module({
   imports: [
@@ -25,6 +26,6 @@ import { ExistValidator } from './etc/validator/exist-validator';
     UserModule
   ],
   controllers: [AppController],
-  providers: [AppService, ExistValidator],
+  providers: [AppService, ExistValidator, UniqueValidator],
 })
 export class AppModule {}

@@ -8,7 +8,7 @@ async function bootstrap() {
     whitelist: true, // validasi berdasarkan DTO
     forbidUnknownValues: true,
     transform: true, //  supaya ada message errornya.
-    validateCustomDecorators: true, // karena ada validasi buatan sendiri, IsExist src/etc/validator/exist-validator, pada src\user\dto\create-user.dto.ts
+    validateCustomDecorators: true, // karena ada validasi buatan sendiri, IsUnique src/etc/validator/unique-validator, pada src\user\dto\create-user.dto.ts
     transformOptions: {  // karena ada validasi buatan sendiri, sda
       enableImplicitConversion: true  // karena ada validasi buatan sendiri, sda
     }
