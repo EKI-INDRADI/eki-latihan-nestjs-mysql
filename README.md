@@ -150,7 +150,17 @@ data transfer object = https://docs.nestjs.com/controllers
 ```bash
 //006
 ---info
+postman = https://www.postman.com/
 inject repository user (entity user), agar memudahkan ketika membuat CRUD
+---/info
+```
+
+```bash
+//007
+npm i class-validator class-transformer
+---info
+informasi lebih lanjut : https://docs.nestjs.com/techniques/validation
+kedua dependecy tersebut berguna untuk request validation pada API, validasi request berdasarkan class dengan memanfaatkan fungsi global middleware validationPipe
 ---/info
 ```
 
