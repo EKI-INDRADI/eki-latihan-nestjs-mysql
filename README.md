@@ -246,7 +246,18 @@ import { ApiTags } from '@nestjs/swagger';
 -- auto generate swagger property -- 
 import { ApiProperty } from "@nestjs/swagger"
 export class UserDto { 
-    @ApiProperty()
+    @ApiProperty() // swagger auto generate property
+    @IsOptional()
+    @IsExist([User, 'id'])
+    id?: number  
+
+    @ApiProperty({required:true}) // {required:true} sama aja kyk @IsNotEmpty()
+    @IsString()
+    @MaxLength(64)
+    @MinLength(8)
+    @IsNotEmpty()
+    nama_user: string
+
     ...
     ...
 }

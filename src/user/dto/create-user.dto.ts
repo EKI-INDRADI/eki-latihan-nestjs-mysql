@@ -1,8 +1,8 @@
 import { IsEmail, IsNotEmpty, IsOptional, IsString, MaxLength, MinLength } from "class-validator"
 
+import { User } from "../entities/user.entity"
 //=================== @IsUnique
 import { IsUnique } from "src/etc/validator/unique-validator"
-import { User } from "../entities/user.entity"
 //=================== @IsUnique
 //=================== @IsExist
 import { IsExist } from "src/etc/validator/exist-validator"
@@ -17,12 +17,14 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
     @IsExist([User, 'id'])
     id?: number  // ? = optional
 
+    @ApiProperty({required:true}) //  {required:true} swagger wajib di isi (kayaknya sama aja  @IsNotEmpty())
     @IsString()
     @MaxLength(64)
     @MinLength(8)
     @IsNotEmpty()
     nama_user: string
 
+    // @ApiProperty({required:true})
     @IsEmail()
     @IsUnique([User, 'email']) // src\etc\validator\unique-validator.ts
     @MaxLength(32)
@@ -30,6 +32,7 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
     @IsNotEmpty()
     email: string
 
+    // @ApiProperty({required:true})
     @IsString()
     @MaxLength(32)
     @MinLength(8)
@@ -37,6 +40,7 @@ export class UserDto { // DTO data transfer object (schema) untuk keperluan cont
     @IsUnique([User, 'username']) // src\etc\validator\unique-validator.ts
     username: string
 
+    // @ApiProperty({required:true})
     @IsString()
     @MaxLength(32)
     @MinLength(8)
