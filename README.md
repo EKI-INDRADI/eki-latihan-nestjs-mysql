@@ -188,7 +188,7 @@ maka diperlukanya manual duplicate validator
 nest g provider etc/validator/unique-validator
 
 ---info
-nest g provider = membuat class / provider yang nantinya akan di panggil kembali (manual validasi unique)
+nest g provider = membuat class / provider yang nantinya akan di panggil kembali (contoh digunakan untuk manual validasi unique)
 
 hasil result :
 {
