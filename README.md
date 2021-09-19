@@ -211,7 +211,7 @@ copy dari unique-validator
 ```
 
 
-next video 21:10
+
 
 ## REFERENSI :
 
