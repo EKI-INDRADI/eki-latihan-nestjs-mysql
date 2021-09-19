@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, UserIdDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 // url = http://localhost
@@ -12,7 +12,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 // url = http://localhost:3000/user
 
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post()
   create(@Body() createUserDto: CreateUserDto) { // pada saat generate end point Y sudah automatic ter set DTO
@@ -35,7 +35,12 @@ export class UserController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  // remove(@Param('id') id: string) {
+  remove(@Param() get_UserIdDto: UserIdDto) {
+    // karena id menggunakan DTO
+    // maka return nya adalah {id:2}
+    // return di bawah ini tidak dapat digunakan untuk delete
+    // return this.userService.remove(+id);
+    return this.userService.remove(get_UserIdDto.id);
   }
 }

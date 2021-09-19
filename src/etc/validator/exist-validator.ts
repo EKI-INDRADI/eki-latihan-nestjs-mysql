@@ -16,14 +16,13 @@ export class ExistValidator implements ValidatorConstraintInterface {
         // console.log(args.constraints[0])
         let check = await getConnection().getRepository(args.constraints[0]).findOne(find)
 
-        if (check) return false // jika ada return false
-        return true
+        if (check) return true 
+        return false
     }
 
     defaultMessage(args: ValidationArguments) {
         // args.property  = nama object  , args.value = value object
-        return args.property + ' ' + args.value + ' sudah digunakan'
-        // example result =   email admin@gmail.com sudah digunakan
+        return args.property + ' ' + args.value + ' tidak ditemukan'
     }
 
 }

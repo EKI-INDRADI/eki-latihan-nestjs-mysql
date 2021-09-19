@@ -188,9 +188,10 @@ maka diperlukanya manual duplicate validator
 nest g provider etc/validator/unique-validator
 
 ---info
-nest g provider = membuat class / provider yang nantinya akan di panggil kembali (contoh digunakan untuk manual validasi unique)
+nest g provider = membuat class / provider yang nantinya akan di panggil kembali (contoh digunakan untuk manual validasi unique), 
+bertujuan untuk validasi jika data ditemukan maka tidak boleh dieksekusi
 
-hasil result :
+response :
 {
     "statusCode": 400,
     "message": [
@@ -201,15 +202,31 @@ hasil result :
 }
 ---/info
 
-
 nest g provider etc/validator/exist-validator
 
 ---info
 copy dari unique-validator
 ---/info
-
 ```
 
+```bash
+//010
+
+nest g provider etc/validator/exist-validator
+
+---info
+copy dari unique-validator & rubah beberapa code, bertujuan untuk validasi jika data ditemukan maka boleh dieksekusi (contoh delete data)
+response :
+{
+    "statusCode": 400,
+    "message": [
+        "id 2 tidak ditemukan"
+    ],
+    "error": "Bad Request"
+}
+---/info
+
+```
 
 
 

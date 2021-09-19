@@ -47,6 +47,9 @@ export class UserService {
   // maka ketika menghapus id 8 kembali akan error ExceptionHandler
   // karena tidak adanya nilai yang ingin dihapus 
   // cara penanganannya adalah selanjutnya akan di bahas IsExist validator
+  // solusinya : 
+  // 1. UserIdDto src\user\dto\create-user.dto.ts 
+  // 2. remove(@Param() get_UserIdDto: UserIdDto)  src\user\user.controller.ts
 
 
   hash(plaintextPassword) {
