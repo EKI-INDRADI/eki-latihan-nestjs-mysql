@@ -123,7 +123,7 @@ mysql2 = mysql driver
 //003
 nest g res user
 REST API
-generate end-point Y
+generate entry points Y
 
 ---info
 nest generate resource user = generate user module https://docs.nestjs.com/recipes/crud-generator
@@ -294,6 +294,34 @@ edit nest-cli.json
 ---/bug info & bug fix
 ```
 
+
+
+```bash
+//012
+buat controller nest g crontroller <name>
+buat services nest g service <name>
+buat module nest g module <name>
+tapi saran menggunkan resource saja agar lebih mudah
+
+nest g res auth
+REST API
+generate CRUD entry points? n
+
+npm i @nestjs/passport
+npm i @nestjs/jwt
+npm i passport
+npm i passport-jwt
+npm i -D @types/passport-jwt
+
+buat file pada src/auth/jwt.strategy.ts
+
+tambah .env  JWT_SECRET_KEY= 'eki-secret-key'
+
+---info
+ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan konfigurasi
+---/info
+
+```
 
 ## REFERENSI :
 

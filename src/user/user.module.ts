@@ -10,6 +10,7 @@ import { User } from './entities/user.entity';
 
   ],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService],
+  exports: [UserService] // agar bisa digunakan di tempat lain harus export  (keperluan jwt)
 })
 export class UserModule {}
