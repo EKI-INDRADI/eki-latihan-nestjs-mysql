@@ -317,6 +317,10 @@ buat file pada src/auth/jwt.strategy.ts
 
 tambah .env  JWT_SECRET_KEY= 'eki-secret-key'
 
+dokumentasi :
+https://docs.nestjs.com/security/authentication
+https://docs.nestjs.com/security/authorization
+
 ---info
 ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan konfigurasi
 ---/info
