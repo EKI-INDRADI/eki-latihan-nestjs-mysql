@@ -322,7 +322,8 @@ ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan kon
 ---/info
 
 ```
-
+next video  1:25:20
+ 
 ## REFERENSI :
 
 NestJs (express) - MySQL - https://www.youtube.com/watch?v=WuGKMQpVQRA (thanks to Web App Project)
