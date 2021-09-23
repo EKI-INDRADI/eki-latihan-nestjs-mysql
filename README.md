@@ -421,7 +421,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  1:42:00
+next video  1:45:34
  
 ## REFERENSI :
 
