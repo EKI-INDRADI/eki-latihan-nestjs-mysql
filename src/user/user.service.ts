@@ -28,6 +28,12 @@ export class UserService {
     return this.userRepo.findOne(id);
   }
 
+  //================ keperluan auth services
+  findUsername(username) {
+    return this.userRepo.findOne({ username: username });
+  }
+  //================ / keperluan auth services
+
   update(id: number, updateUserDto: UpdateUserDto) {
     updateUserDto.id = id // inject id (berdasarkan request) , maka kondisi akan update
     if (updateUserDto.password) {
@@ -58,9 +64,11 @@ export class UserService {
     return hash
   }
 
+  //================ keperluan auth services
   compare(plaintextPassword, hashPassword) {
     const valid = bcrypt.compareSync(plaintextPassword, hashPassword)
     return valid
   }
+  //================ /keperluan auth services
 
 }

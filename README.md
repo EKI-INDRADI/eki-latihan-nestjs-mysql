@@ -317,16 +317,37 @@ buat file pada src/auth/jwt.strategy.ts
 
 tambah .env  JWT_SECRET_KEY= 'eki-secret-key'
 
+---info
 dokumentasi :
 https://docs.nestjs.com/security/authentication
 https://docs.nestjs.com/security/authorization
 
----info
 ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan konfigurasi
 ---/info
 
 ```
-next video  1:25:20
+
+```bash
+//013
+nest g guard auth/jwt  (bawaan dari CLI codenya beberapa di hapus & di rubah)
+
+---info
+setting expiresIn (waktu expired) & setting penggunaan Jwt strategy pada auth module,
+login authentication & generate token
+---/info
+
+---bug info & bug fix
+ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique validator (memvalidasi jika username sama), akibatnya tidak dapat login(generate token)
+---/bug info & bug fix
+```
+
+
+
+mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
+
+semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
+
+next video  1:42:00
  
 ## REFERENSI :
 
