@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthDto } from './auth.dto';
 import { AuthService } from './auth.service';
 import { JwtGuard } from './jwt.guard';
@@ -12,6 +12,7 @@ export class AuthController {
   }
 
   @Get()
+  @ApiBearerAuth() // ini berfungsi agar swagger tau bahwa API ini memerlukan header (Bearer token) untuk authorize routesnya (contoh gambar gembok dikanan nama routes)
   @UseGuards(JwtGuard) // melindungin request dengan JWT menggunakan Guard
   checkUserController(@Request() req) {
       // ======================== ERROR 1, KETIKA NENAMBAHKAN UseGuard

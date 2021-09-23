@@ -27,6 +27,7 @@ async function bootstrap() {
     .setTitle('OPEN-API POS')
     .setDescription('Documentasi untuk api point of sale')
     .setVersion('1.3')
+    .addBearerAuth()  // karena token disini menggunakan Bearer Aeuth , ada banyak security contoh lainnya : // .addApiKey('x-access-token') // .addBasicAuth
     .build()
 
   const configCustomSwagger: SwaggerCustomOptions = {

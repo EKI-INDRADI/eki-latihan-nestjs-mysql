@@ -74,7 +74,9 @@ Nest is [MIT licensed](LICENSE).
 
 ##  EKI NOTE :
 
-"disini saya tambahkan pemahaman typescript saya & beberapa informasi penting dari video tutorial pada comment code"
+"sebelumnya terimakasih kepada "Web App Project" Youtube Channel saya tambahkan penjelasan beliau & disini saya tambahkan juga pemahaman typescript saya & beberapa informasi penting dari video tutorial pada comment code" ,
+
+"pentingnya dokumentasi karena disini saya memiliki pengalaman Research & Development tanpa dokumentasi, tanpa portfolio, tanpa bukti nyata adalah 'BULLSHIT' ".
 
 ## 1. install Docker, Phpmyadmin & Mariadb
 
@@ -415,13 +417,45 @@ ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique val
 ---/bug info & bug fix
 ```
 
+```bash
+//015
+
+---code
+  const configSwagger = new DocumentBuilder()
+  ....
+  ....
+    .addBearerAuth()  // karena token disini menggunakan Bearer Aeuth , ada banyak security contoh lainnya : // .addApiKey('x-access-token') // .
+  ....
+  ....
+---/code
+
+---info
+swagger header jwt auth (swagger security), berguna untuk memasukan token pada OPEN-API (dokumentasi API) SWAGGER, untuk mengijinkan beberapa routes yang memerlukan akses token jwt,
+
+ .addBearerAuth() mengaktifkan header jwt auth (swagger security) untuk token access , akan muncul tombol Authorize pada pojok kanan atas
+---/info
+
+
+---code
+  @Get()
+  @ApiBearerAuth() 
+---/code
+
+---info
+dokumentasi https://swagger.io/docs/specification/authentication/bearer-authentication/
+Authorization: Bearer <token>
+ini berfungsi agar swagger tau bahwa API ini memerlukan header (Bearer token) untuk authorize routesnya (contoh gambar gembok dikanan nama routes pada controller yang diset @ApiBearerAuth() )
+---/info
+```
+
+
 
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  1:45:34
+next video  1:47:38
  
 ## REFERENSI :
 
