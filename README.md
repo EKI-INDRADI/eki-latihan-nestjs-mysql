@@ -331,6 +331,7 @@ ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan kon
 //013
 nest g guard auth/jwt  (bawaan dari CLI codenya beberapa di hapus & di rubah)
 
+buat dto manual auth.dto.ts
 ---info
 setting expiresIn (waktu expired) & setting penggunaan Jwt strategy pada auth module,
 login authentication & generate token
