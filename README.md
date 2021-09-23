@@ -343,6 +343,79 @@ ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique val
 ```
 
 
+```bash
+//014
+
+---info
+  ----- CODE
+  @Get()
+  @UseGuards(JwtGuard) // melindungin request dengan JWT menggunakan Guard
+  checkUserController(@Request() req) {
+    ...
+    ...
+  ----- /CODE
+
+  UseGuard, berfungsi untuk mengamankan routes JWT, contoh :
+  ------ SESUDAH GUARD
+  {
+  "statusCode": 401,
+  "message": "Unauthorized"
+  }
+  ------ /SESUDAH GUARD
+---/info
+
+---bug info & bug fix
+    // ======================== ERROR 1, KETIKA NENAMBAHKAN UseGuard
+    // Error: Strategy#authenticate must be overridden by subclass
+    // at JwtStrategy.Strategy.authenticate (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\passport-strategy\lib\strategy.js:21:9)
+    // at attempt (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\passport\lib\middleware\authenticate.js:366:16)
+    // at authenticate (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\passport\lib\middleware\authenticate.js:367:7)
+    // at D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\passport\dist\auth.guard.js:91:3
+    // at new Promise (<anonymous>)
+    // at D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\passport\dist\auth.guard.js:83:83
+    // at JwtGuard.<anonymous> (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\passport\dist\auth.guard.js:49:36)
+    // at Generator.next (<anonymous>)
+    // at fulfilled (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\passport\dist\auth.guard.js:17:58)
+    // at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    // ======================== /ERROR 1, KETIKA NENAMBAHKAN UseGuard
+
+    // ======================== SOLUSI ERROR 1
+    // pada JWT strategy (src\auth\jwt.strategy.ts), seharusnya mengambil dari passport-jwt
+    // ------------ SEBELUM
+    // import { Strategy } from "passport";
+    // import { ExtractJwt } from "passport-jwt";
+    // ------------ /SEBELUM
+
+    //------------- SESUDAH
+    // import { ExtractJwt, Strategy } from "passport-jwt";
+    //------------- /SESUDAH
+    // ======================== /SOLUSI ERROR 1
+
+    // ======================== ERROR 2, import { Strategy } from "passport-jwt"; 
+    //    TypeError: JwtStrategy requires a function to retrieve jwt from requests (see option jwtFromRequest)
+    //    at new JwtStrategy (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\passport-jwt\lib\strategy.js:55:15)
+    //    at new MixinStrategy (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\passport\dist\passport\passport.strategy.js:32:13)
+    //    at new JwtStrategy (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\src\auth\jwt.strategy.ts:14:9)
+    //    at Injector.instantiateClass (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\core\injector\injector.js:291:19)
+    //    at callback (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\core\injector\injector.js:43:41)
+    //    at processTicksAndRejections (internal/process/task_queues.js:95:5)
+    //    at Injector.resolveConstructorParams (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\core\injector\injector.js:119:24)
+    //    at Injector.loadInstance (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\core\injector\injector.js:47:9)
+    //    at Injector.loadProvider (D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\node_modules\@nestjs\core\injector\injector.js:69:9)
+    //    at async Promise.all (index 4)
+    // ======================== /ERROR 2, import { Strategy } from "passport-jwt"; 
+            
+    // ======================== SOLUSI ERROR 2
+    // https://stackoverflow.com/questions/51131480/jwtstrategy-requires-a-function-to-retrieve-jwt-from-requests
+    // SEBELUMNYA : // JwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),  
+    // SEHARUSNYA : (menggunakan j kecil)
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // ini merima tokenya dari mana , kalo ini dari authorization : Bearer <token>
+    // ======================== /SOLUSI ERROR 2
+    
+---/bug info & bug fix
+```
+
+
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
