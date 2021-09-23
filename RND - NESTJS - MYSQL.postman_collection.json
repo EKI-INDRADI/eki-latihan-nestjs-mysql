@@ -43,7 +43,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nama_user\" : \"Admin\",\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"123456\"\r\n}",
+					"raw": "{\r\n    \"nama_user\" : \"adminekix\",\r\n    \"email\" : \"adminx@gmail.com\",\r\n    \"username\" : \"adminekix\",\r\n    \"password\" : \"masuk123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,13 +65,13 @@
 			"response": []
 		},
 		{
-			"name": "user",
+			"name": "auth get token",
 			"request": {
-				"method": "PATCH",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nama_user\" : \"Admin\",\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"123456ubah\"\r\n}",
+					"raw": "{\r\n    \"username\" : \"admineki\",\r\n    \"password\" : \"masuk123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -79,7 +79,72 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/user/1",
+					"raw": "http://localhost:3000/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "auth get user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNjMyNDAzMzQ3LCJleHAiOjE2MzI0NDY1NDd9.lgWxwETrMLlBZRQeqthGRdA8RcTzjZcTS_W-uiU_7oc",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"admineki\",\r\n    \"password\" : \"masuk123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nama_user\" : \"Admin6234\",\r\n    \"email\" : \"adminxx@gmail.com\",\r\n    \"username\" : \"admin2222x\",\r\n    \"password\" : \"masuk123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -87,7 +152,7 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"1"
+						"6"
 					]
 				}
 			},
