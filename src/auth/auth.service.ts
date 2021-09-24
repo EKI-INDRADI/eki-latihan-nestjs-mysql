@@ -29,10 +29,10 @@ export class AuthService { // services ini digunakan untuk melakukan pengecekan 
     }
 
 
-    generateToken(user:any){
-        let dataToken = {id:user.id}
+    generateToken(user: any) {
+        let dataToken = { id: user.id, tampilkan_semua_payload: user } /// contoh payload JWT
         let token = this.jwtService.sign(dataToken)
-        return {token : token}
+        return { token: token }
     }
 
 }

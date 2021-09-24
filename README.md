@@ -448,6 +448,27 @@ ini berfungsi agar swagger tau bahwa API ini memerlukan header (Bearer token) un
 ---/info
 ```
 
+```bash
+//016
+
+silahkan di coba pada http://localhost:3000/auth 
+untuk memuncukan request perlu authorization
+pada swagger (masukan token pada button Authorize) 
+atau
+pada postman (masukan header Authorization : Bearer <token>)
+
+---info
+contoh memodifikasi JWT PAYLOAD
+src\auth\jwt.strategy.ts
+src\auth\auth.service.ts
+src\auth\auth.controller.ts
+Json Web Token memiliki fitur untuk memasukan payload data pada token nya,
+nah disini payload token tersebut akan di enkripsi/hashing/encode (tergantung algoritma) 
+kemudian setelah login berhasil payload tersebut akan di decode/dekripsi berupa data/object yang mana data tersebut dapat langsung digunakan kembali sesuai kebutuhan
+
+dokumentasi jwt : https://jwt.io/
+---/info
+```
 
 
 
@@ -455,7 +476,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  1:47:38
+next video  1:48:27
  
 ## REFERENSI :
 

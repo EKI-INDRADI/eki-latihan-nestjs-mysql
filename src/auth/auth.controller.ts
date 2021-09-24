@@ -48,9 +48,9 @@ export class AuthController {
     // console.log(authDto)
     let user = await this.authService.checkUser(authDto.username, authDto.password)
     return this.authService.generateToken({ // untuk generate token berdasarkan payload data (baca dokumentasi jwt terlebih dahulu, karena jwt mampu menyimpan payload (di enkripsi))
-      id: user.id   // hanya kirim id saja  (jika butuh payload bnyk kirim payload yg di perlukan)
+      id: user.id,   // hanya kirim id saja  (jika butuh payload bnyk kirim payload yg di perlukan)
+      loginController_payload : user
     })
-
   }
 
 }
