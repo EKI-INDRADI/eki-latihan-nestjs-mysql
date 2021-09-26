@@ -100,6 +100,8 @@ nest --version
 
 ## 3. CLI & note
 
+## ==== STAGE 1 = BASIC, USER, JWT & SWAGGER
+
 ```bash
 //001
 generate project :
@@ -502,11 +504,72 @@ contohnya pada user controller  (membutuhkan header Authorization : Bearer <toke
 ---/info
 ```
 
+## ==== /STAGE 1 = BASIC, USER, JWT & SWAGGER
+
+## ==== STAGE 2 = PRODUK, FILE UPLOAD
+
+```bash
+//018
+nest g res produk
+
+
+---info
+membuat resource produk
+---/info
+
+src\produk\entities\produk.entity.ts
+    @UpdateDateColumn({ onUpdate: "CURRENT_TIMESTAMP(6)" }) 
+    update_at: Date
+
+---info
+generate langsung waktu updatenya memunculkan pada object {onUpdate : value} , nanti akan otomatis keluar pada result object
+---/info
+
+src\produk\entities\produk.entity.ts
+    @ManyToOne(() => User, data => data.id) // User dari User entities
+    user: User // User dari User entities
+
+---info
+relasi kepada user  
+ERD : produk - user
+ERD : * - 1
+
+membuat foreign key userId pada product
+---/info
+
+src\app.module.ts
+      entities : [
+        .....,
+        Produk 
+      ],
+      synchronize : true 
+
+---info
+ karena adanya  synchronize : true, maka produk tabel akan otomatis digenerate di database
+---/info
+
+src\user\entities\user.entity.ts
+    @OneToMany(()=>Produk, data => data.id)
+    produk : Produk
+
+---info
+relasi kepada produk
+ERD : user - produk
+ERD : 1 - *
+
+agar user dapat melakukan relasi pada produk  (hanya optional, lebih baik ditambahkan)
+---/info
+
+
+```
+
+## ==== /STAGE 2 = PRODUK, FILE UPLOAD
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  1:51:20
+next video  1:58:33
  
 ## REFERENSI :
 

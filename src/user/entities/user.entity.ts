@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Produk } from "src/produk/entities/produk.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 
@@ -32,5 +33,13 @@ export class User {
 
     @UpdateDateColumn() // auto generate update new Date()
     update_at: Date
+
+    // relasi kepada produk
+    // ERD : user - produk
+    // ERD : 1 - *
+    // agar user dapat melakukan relasi pada produk 
+    @OneToMany(()=>Produk, data => data.id)  
+    produk : Produk
+
 
 }

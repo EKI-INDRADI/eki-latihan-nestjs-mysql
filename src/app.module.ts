@@ -8,6 +8,8 @@ import { UserModule } from './user/user.module';
 import { ExistValidator } from './etc/validator/exist-validator';
 import { UniqueValidator } from './etc/validator/unique-validator';
 import { AuthModule } from './auth/auth.module';
+import { ProdukModule } from './produk/produk.module';
+import { Produk } from './produk/entities/produk.entity';
 
 @Module({
   imports: [
@@ -20,12 +22,14 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
       entities : [
-        User // jangan lupa tambahin setelah selesai buat user.entity.js
+        User, // jangan lupa tambahin setelah selesai buat user.entity.js
+        Produk // karena adanya  synchronize : true, maka produk tabel akan otomatis digenerate didatabase
       ],
       synchronize : true // entity yang dibuat tablenya akan otomatis di generate
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    ProdukModule
   ],
   controllers: [AppController],
   providers: [AppService, ExistValidator, UniqueValidator],
