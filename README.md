@@ -563,6 +563,27 @@ agar user dapat melakukan relasi pada produk  (hanya optional, lebih baik ditamb
 
 ```
 
+
+```bash
+//019
+    @IsObject()
+    user: UserDto
+---info
+setting DTO Produk,
+datanya user harus object (karena relasi dari user)
+pake fieldnya mengikuti object UserDto
+---/info
+
+export class CreateProdukDto extends OmitType(ProdukDto, ['id']){}
+export class ProdukIdDto extends PickType(ProdukDto, ['id']){}
+
+---info
+OmitType dari swagger & buang id nya  // OmitType = buang sebagian
+PickType dari swagger & hanya ambil id nya  // PickType = ambil sebagian
+---/info
+
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
