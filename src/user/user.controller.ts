@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto, UserIdDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @ApiTags('User') // AUTO GENERATE OPEN API SWAGGER
 // url = http://localhost
@@ -10,6 +11,8 @@ import { ApiTags } from '@nestjs/swagger';
 // src\main.ts
 // url = http://localhost:3000
 // +
+@ApiBearerAuth()  // ini aktifkan Bearer Auth untuk seluruh routes controller user pada swagger
+@UseGuards(JwtGuard)  // ini aktifkan Bearer Auth untuk seluruh routes controller user (membutuhkan header Authorization : Bearer <token>)
 @Controller('user')
 // url = http://localhost:3000/user
 

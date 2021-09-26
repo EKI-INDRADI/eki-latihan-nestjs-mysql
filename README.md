@@ -78,12 +78,15 @@ Nest is [MIT licensed](LICENSE).
 
 "pentingnya dokumentasi karena disini saya memiliki pengalaman Research & Development tanpa dokumentasi, tanpa portfolio, tanpa bukti nyata adalah 'BULLSHIT' ".
 
-## 1. install Docker, Phpmyadmin & Mariadb
-
+## 1. installation Docker, Phpmyadmin & Mariadb
 ```bash
+install vm alpine + docker
+https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
+
+install Docker, Phpmyadmin & Mariadb
 https://github.com/EKI-INDRADI/eki-latihan-docker-phpmyadmin-mariadb
 
-create db simple_pos
+create database simple_pos
 ```
 
 ## 2. install nodejs & nestjs
@@ -470,13 +473,40 @@ dokumentasi jwt : https://jwt.io/
 ---/info
 ```
 
+```bash
+//017
 
+
+// AUTH USER SWAGGER :
+@ApiTags('User') 
+@ApiBearerAuth()  // ini aktifkan Bearer Auth untuk seluruh routes controller user (hanya swagger)
+@Controller('user')
+
+---info
+// AUTH USER SWAGGER :
+ini sama seperti 015 , @ApiBearerAuth() ini dapat dibuat secara spesifik dan juga sekaligus pada seluruh controller
+contohnya pada user controller (hanya swagger)
+---/info
+
+// AUTH USER CONTROLLER :
+
+@ApiTags('User')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)  // ini aktifkan Bearer Auth untuk seluruh routes controller user (membutuhkan header Authorization : Bearer <token>)
+@Controller('user')
+
+---info
+// AUTH USER CONTROLLER :
+ini sama seperti 014 , @UseGuards(JwtGuard) ini dapat dibuat secara spesifik dan juga sekaligus pada seluruh controller
+contohnya pada user controller  (membutuhkan header Authorization : Bearer <token>)
+---/info
+```
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  1:48:27
+next video  1:51:20
  
 ## REFERENSI :
 

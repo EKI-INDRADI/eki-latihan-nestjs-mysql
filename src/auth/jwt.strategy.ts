@@ -72,8 +72,8 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
             let res_json: any = {
                 id: user.id, // ambil id dari user = await this.userService.findOne(payload.id)
                 nama_user: user.nama_user, // ambil nama_user dari user = await this.userService.findOne(payload.id)
-                payload_login_controller: payload_loginController, // ambil dari JWT payload tanpa await this.userService.findOne(payload.id)
-                all_payload: payload.tampilkan_semua_payload // ambil dari JWT payload tanpa await this.userService.findOne(payload.id)
+                payload_login_controller: payload_loginController // ambil dari JWT payload tanpa await this.userService.findOne(payload.id)
+                // ,all_payload: payload.tampilkan_semua_payload // ambil dari JWT payload tanpa await this.userService.findOne(payload.id)
                 // jangan lupa  (payload : any) untuk bisa pakai "."
             }
             return res_json
