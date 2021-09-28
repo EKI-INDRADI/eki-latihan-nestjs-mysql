@@ -610,13 +610,106 @@ buat services CRUD produk berdasarkan entity dan edit UpdateProdukDto
 
 ```
 
+
+```bash
+//021
+npm i -D @types/multer
+
+---info
+sebelumnya menggunakan JSON konsep untuk mengeluarkan data, tetapi karena ada FILE UPLOAD ,maka perlu menggunakan 'multipart/form-data'
+---/info
+
+src\produk\produk.controller.ts
+import { ...., UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+
+@ApiTags('Produk')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
+@Controller('produk')
+
+...
+...
+...
+
+src\produk\produk.controller.ts
+
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: CreateProdukDto })
+  create(@Body() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    createProdukDto.foto = foto.filename
+    return this.produkService.create(createProdukDto);
+  }
+
+---info
+agar swagger merubah format default (JSON) , menjadi multipart/form-data,
+karena swagger ada perubahan multipart maka Request Body nya perlu disesuaikan lagi
+memanfaatkan depedency multer
+---/info
+
+
+
+
+---bug info & bug fix
+
+nestjs BUG Swagger (muncul data user pada swagger, padahal tidak menggunakan  @ApiProperty() )
+src\produk\dto\create-produk.dto.ts
+ 
+    @IsObject() 
+    user: UserDto 
+
+
+cara fix nya :
+referensi : https://github.com/nestjs/swagger/issues/493
+tambahkan  @ApiHideProperty()  untuk menghilangkan pada swagger (agar tidak diinput)
+
+    @ApiHideProperty() 
+    @IsObject() 
+    user: UserDto 
+
+
+---/bug info & bug fix
+
+    @ApiProperty({format:'binary'})
+    @IsOptional() 
+    foto: string
+    
+---info
+agar format swagger berubah untuk merubah menjadi "file upload" tambahkan {format:'binary'} (pada kondisi multipart/form-data),
+sebelumnya IsString() rubah menjadi @IsOptional() karena image sudah berbentuk binary
+---/info
+
+
+Note :
+
+{
+    "statusCode": 400,
+    "message": [
+        "user must be an object"
+    ],
+    "error": "Bad Request"
+}
+
+
+Karena :
+
+    @IsObject() 
+    user: UserDto 
+
+
+ini akan mengalami masalah solusinya ada pada code selanjutnya (tujuan nya agar dapat otomatis simpan data user, 
+menggunakan teknologi nestjs & payload jwt)
+  
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:07:40 (update ketika kerjaan kantor sudah selesai)
+next video  02:08:19 (update ketika kerjaan kantor sudah selesai)
  
 ## REFERENSI :
 

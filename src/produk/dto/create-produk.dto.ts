@@ -1,5 +1,5 @@
-import { ApiProperty, OmitType, PickType } from "@nestjs/swagger"
-import { IsDate, IsNotEmpty, IsNumber, IsObject, IsString } from "class-validator"
+import { ApiHideProperty, ApiProperty, OmitType, PickType } from "@nestjs/swagger"
+import { IsDate, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString } from "class-validator"
 import { IsExist } from "src/etc/validator/exist-validator"
 import { IsUnique } from "src/etc/validator/unique-validator"
 import { UserDto } from "src/user/dto/create-user.dto"
@@ -20,6 +20,11 @@ export class ProdukDto {
     @ApiProperty() 
     @IsString()
     @IsNotEmpty()
+    nama_produk: string
+
+    @ApiProperty() 
+    @IsString()
+    @IsNotEmpty()
     deskripsi_produk: string
 
     @ApiProperty() 
@@ -32,21 +37,20 @@ export class ProdukDto {
     @IsNotEmpty()
     harga_jual: number
 
-    @ApiProperty() 
-    @IsString()
-    @IsNotEmpty()
+    @ApiProperty({format:'binary'})  // untuk merubah menjadi file upload
+    @IsOptional() // jangan setting ke string
     foto: string
 
-    @ApiProperty() 
-    @IsDate()
-    create_at: Date
+    // @ApiProperty() 
+    // @IsDate()
+    // create_at: Date
 
-    @ApiProperty() 
-    @IsDate()
-    update_at: Date
+    // @ApiProperty() 
+    // @IsDate()
+    // update_at: Date
 
-    // @ApiProperty() // gak perlu di input 
-    @IsObject() //datanya harus object (karena relasi dari user)
+    @ApiHideProperty() // <<< ini berguna untuk exclude swagger,  gak perlu di input user @ApiProperty() (otomatis dari user login)
+    @IsObject()  //datanya harus object (karena relasi dari user)
     user: UserDto // pake fieldnya mengikuti UserDto
 } 
 export class CreateProdukDto extends OmitType(ProdukDto, ['id']){} //OmitType dari swagger & buang id nya  // OmitType = buang sebagian

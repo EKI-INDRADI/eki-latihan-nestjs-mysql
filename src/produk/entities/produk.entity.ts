@@ -10,6 +10,9 @@ export class Produk {
     barcode: string
 
     @Column()
+    nama_produk: string
+
+    @Column()
     deskripsi_produk: string
 
     @Column()

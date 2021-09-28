@@ -1,14 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ProdukService } from './produk.service';
 import { CreateProdukDto } from './dto/create-produk.dto';
 import { UpdateProdukDto } from './dto/update-produk.dto';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/auth/jwt.guard';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
+@ApiTags('Produk')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('produk')
 export class ProdukController {
-  constructor(private readonly produkService: ProdukService) {}
+  constructor(private readonly produkService: ProdukService) { }
 
-  @Post()
-  create(@Body() createProdukDto: CreateProdukDto) {
+  @Post() // (INI BUKAN JSON, INI MULTIPART) menggunakan multer dan memanfaatkan fungsi dari interceptor
+  @UseInterceptors(FileInterceptor('foto', {   // file interceptor dengan name foto
+    storage: diskStorage({ // custom bawaan multer
+      destination: './assets/produk'
+    })
+  }))
+  @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
+  @ApiBody({ type: CreateProdukDto }) // karena swagger ada perubahan multipart maka Request Body nya perlu disesuaikan lagi
+  create(@Body() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    createProdukDto.foto = foto.filename
     return this.produkService.create(createProdukDto);
   }
 
