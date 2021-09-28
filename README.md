@@ -584,13 +584,39 @@ PickType dari swagger & hanya ambil id nya  // PickType = ambil sebagian
 
 ```
 
+
+```bash
+//020
+src\produk\produk.module.ts
+
+import { Produk } from './entities/produk.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+@Module({
+  imports : [
+    TypeOrmModule.forFeature([Produk])
+  ],
+
+---info
+register entities produk pada module produk, agar entity dapat digunakan pada module produk
+---/info
+
+src\produk\produk.service.ts
+src\produk\dto\update-produk.dto.ts
+
+---info
+buat services CRUD produk berdasarkan entity dan edit UpdateProdukDto
+---/info
+
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:03:30
+next video  02:07:40 (update ketika kerjaan kantor sudah selesai)
  
 ## REFERENSI :
 
