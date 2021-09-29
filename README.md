@@ -703,13 +703,78 @@ menggunakan teknologi nestjs & payload jwt)
   
 ```
 
+
+```bash
+//022
+
+
+{
+    "statusCode": 400,
+    "message": [
+        "user must be an object"
+    ],
+    "error": "Bad Request"
+}
+
+solusinya :
+
+nest g decorator etc/decorator/inject-user
+
+---info
+decorator InjectUser,
+decorator adalah mirip sebuah function / services contoh : @ApiTags() , @Post() , @ApiBody() , dll
+
+yang mana decorator tersebut bisa kita costum atau membuatnya,
+agar produk dapat otomatis simpan data user, 
+menggunakan teknologi nestjs & payload jwt
+---/info
+
+src\etc\decorator\inject-user.decorator.ts
+
+export const InjectUser = createParamDecorator((data: any, ctx: ExecutionContext) => {
+    const req = ctx.switchToHttp().getRequest()
+    req.body.user = { id : req.user.id}
+    return req.body
+})
+
+
+
+src\produk\produk.controller.ts
+  create(@InjectUser() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) { // SETELAH INJECT USER
+    createProdukDto.foto = foto.filename
+    return this.produkService.create(createProdukDto);
+  }
+
+---info
+menambahkan object user pada request (body) yang di kirim
+
+setelah ditambahkan ketika di test maka responsenya otomatis akan inject user
+
+{
+  "barcode": "test",
+  "nama_produk": "test",
+  "deskripsi_produk": "test",
+  "harga_beli": 111,
+  "harga_jual": 110,
+  "user": {
+    "id": 2
+  },
+  "foto": "27d9b92cc2a95aceb288dac7861252cb",
+  "id": 1,
+  "create_at": "2021-09-28T19:11:29.644Z",
+  "update_at": "2021-09-28T19:11:29.644Z"
+}
+---/info
+  
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:16:25 (update ketika kerjaan kantor sudah selesai)
+next video  02:20:33 (update ketika kerjaan kantor sudah selesai)
  
 ## REFERENSI :
 

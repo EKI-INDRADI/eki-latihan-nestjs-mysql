@@ -6,6 +6,7 @@ import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
 
 @ApiTags('Produk')
 @ApiBearerAuth()
@@ -22,7 +23,8 @@ export class ProdukController {
   }))
   @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
   @ApiBody({ type: CreateProdukDto }) // karena swagger ada perubahan multipart maka Request Body nya perlu disesuaikan lagi
-  create(@Body() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+  // create(@Body() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) { // SEBELUM INJECT USER
+  create(@InjectUser() createProdukDto: CreateProdukDto, @UploadedFile() foto: Express.Multer.File) { // SETELAH INJECT USER
     createProdukDto.foto = foto.filename
     return this.produkService.create(createProdukDto);
   }
