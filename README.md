@@ -841,7 +841,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:20:33 (update ketika kerjaan kantor sudah selesai)
+next video  02:24:40 (update ketika kerjaan kantor sudah selesai)
  
 ## REFERENSI :
 
