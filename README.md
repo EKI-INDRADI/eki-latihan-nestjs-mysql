@@ -768,6 +768,73 @@ setelah ditambahkan ketika di test maka responsenya otomatis akan inject user
   
 ```
 
+```bash
+//023
+
+// import { extname } from 'path/posix'; // rename 'path/posix' to 'path'
+import { extname } from 'path';
+
+
+ @UseInterceptors(FileInterceptor('foto', {  
+    storage: diskStorage({ 
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => {
+        const fileName = [req.user.id, Date.now()].join('-') 
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = new Date().getFullYear() + "-"
+          + ("0" + (new Date().getMonth() + 1)).slice(-2) + "-"
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + number_user_id.toString().padStart(4, '0')
+
+        cb(null, eki_auto_generate + '.' + fileName + '.' + extname(file.originalname)) 
+      }
+    })
+---info
+- customize filename & extention file upload (multipart/form-data), karena nestjs secara default membuatfile generate yang unique tanpa ekstensi
+
+contoh code diatas adalah cara autogenerate filename yang unique, dirubah pada function depedency multer dan memanfaatkan depedency 'path' (extname) untuk mendapatkan original filename (termasuk .)
+response dari 
+
+post file upload product :
+
+{
+  "barcode": "asdas1",
+  "nama_produk": "asdas1",
+  "deskripsi_produk": "asdas1",
+  "harga_beli": 300,
+  "harga_jual": 400,
+  "user": {
+    "id": 2
+  },
+  "foto": "2021-10-03-0002.2-1633275013383.png",
+  "id": 4,
+  "create_at": "2021-10-03T08:30:14.236Z",
+  "update_at": "2021-10-03T08:30:14.236Z"
+}
+
+get product : 
+
+[
+....
+....
+  {
+    "id": 4,
+    "barcode": "asdas1",
+    "nama_produk": "asdas1",
+    "deskripsi_produk": "asdas1",
+    "harga_beli": 300,
+    "harga_jual": 400,
+    "foto": "2021-10-03-0002.2-1633275013383.png",
+    "create_at": "2021-10-03T08:30:14.236Z",
+    "update_at": "2021-10-03T08:30:14.236Z"
+  }
+]
+
+---/info
+
+
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari

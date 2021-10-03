@@ -7,6 +7,8 @@ import { JwtGuard } from 'src/auth/jwt.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
+// import { extname } from 'path/posix'; // rename 'path/posix' to 'path'
+import { extname } from 'path';
 
 @ApiTags('Produk')
 @ApiBearerAuth()
@@ -18,7 +20,17 @@ export class ProdukController {
   @Post() // (INI BUKAN JSON, INI MULTIPART) menggunakan multer dan memanfaatkan fungsi dari interceptor
   @UseInterceptors(FileInterceptor('foto', {   // file interceptor dengan name foto
     storage: diskStorage({ // custom bawaan multer
-      destination: './assets/produk'
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => { // customize filename 
+        const fileName = [req.user.id, Date.now()].join('-') // contohnya menggunakan array
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = new Date().getFullYear() + "-"
+          + ("0" + (new Date().getMonth() + 1)).slice(-2) + "-"
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + number_user_id.toString().padStart(4, '0')
+
+        cb(null, eki_auto_generate + '.' + fileName +  extname(file.originalname)) //  extname(file.originalname) = original filename (termasuk .)
+      }
     })
   }))
   @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
