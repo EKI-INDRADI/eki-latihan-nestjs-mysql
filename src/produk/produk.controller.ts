@@ -22,14 +22,17 @@ export class ProdukController {
     storage: diskStorage({ // custom bawaan multer
       destination: './assets/produk',
       filename: (req: any, file, cb) => { // customize filename 
-        const fileName = [req.user.id, Date.now()].join('-') // contohnya menggunakan array
+        //  const fileName = [req.user.id, Date.now()].join('-') // contohnya menggunakan array
         let number_user_id = Number(req.user.id)
-        let eki_auto_generate = new Date().getFullYear() + "-"
-          + ("0" + (new Date().getMonth() + 1)).slice(-2) + "-"
+        let eki_auto_generate = "PD"
+          + new Date().getFullYear() //+ "-"
+          + ("0" + (new Date().getMonth() + 1)).slice(-2) //+ "-"
           + ("0" + new Date().getDate()).slice(-2) + "-"
-          + number_user_id.toString().padStart(4, '0')
+          + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+          + Date.now()
 
-        cb(null, eki_auto_generate + '.' + fileName +  extname(file.originalname)) //  extname(file.originalname) = original filename (termasuk .)
+        // cb(null, eki_auto_generate + '.' + fileName + extname(file.originalname)) //  extname(file.originalname) = original filename (termasuk .)
+        cb(null, eki_auto_generate + extname(file.originalname))
       }
     })
   }))
@@ -52,7 +55,32 @@ export class ProdukController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProdukDto: UpdateProdukDto) {
+  //==============================COPY FROM POST CONTROLLER
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => {
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = "PD"
+          + new Date().getFullYear()
+          + ("0" + (new Date().getMonth() + 1)).slice(-2)
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+          + Date.now()
+        cb(null, eki_auto_generate + extname(file.originalname))
+      }
+    })
+  }))
+  @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
+  @ApiBody({ type: CreateProdukDto })
+  //==============================/COPY FROM POST CONTROLLER
+  // @ApiBody({ type: UpdateProdukDto }) 
+
+  // update(@Param('id') id: string, @Body() updateProdukDto: UpdateProdukDto) { // sebelum  update upload file
+  update(@Param('id') id: string, @InjectUser() updateProdukDto: UpdateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    if (foto) {
+      updateProdukDto.foto = foto.filename
+    }
     return this.produkService.update(+id, updateProdukDto);
   }
 

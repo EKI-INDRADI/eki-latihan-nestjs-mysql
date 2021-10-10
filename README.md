@@ -835,13 +835,82 @@ get product :
 
 ```
 
+```bash
+//024
+
+let number_user_id = Number(req.user.id)
+let eki_auto_generate = new Date().getFullYear() 
+  + ("0" + (new Date().getMonth() + 1)).slice(-2) 
+  + ("0" + new Date().getDate()).slice(-2) + "-"
+  + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+  + Date.now()
+cb(null, eki_auto_generate + extname(file.originalname))
+
+---info
+Autogenerate product file
+FILENAME : "PD20211010-USR0002-1633834448773.png"
+---/info
+
+ @Patch(':id')
+//==============================COPY FROM POST CONTROLLER
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => {
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = "PD"
+          + new Date().getFullYear()
+          + ("0" + (new Date().getMonth() + 1)).slice(-2)
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+          + Date.now()
+
+        cb(null, eki_auto_generate + extname(file.originalname))
+      }
+    })
+  }))
+  @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
+  @ApiBody({ type: CreateProdukDto })
+  //==============================/COPY FROM POST CONTROLLER
+    update(@Param('id') id: string, @InjectUser() updateProdukDto: UpdateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    if(foto){
+      updateProdukDto.foto = foto.filename
+    }
+    return this.produkService.update(+id, updateProdukDto);
+  }
+
+---info
+update file upload , pada patch id , copy post controller dan tambahkan pada controller patch
+---/info
+
+export class UpdateProdukDto extends PartialType(ProdukDto) {
+    @ApiProperty()
+    @IsString()
+    @IsNotEmpty()
+    barcode: string
+}
+
+---info
+bug fix BUG FIX update menghilangkan IsUnique ,
+    {
+        "statusCode": 400,
+        "message": [
+          "barcode test sudah digunakan"
+        ],
+        "error": "Bad Request"
+    }
+
+---/info
+
+```
+
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:24:40 (update ketika kerjaan kantor sudah selesai)
+next video  02:28:10
  
 ## REFERENSI :
 
