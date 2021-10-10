@@ -102,6 +102,9 @@ nest --version
 
 ## ==== STAGE 1 = BASIC, USER, JWT & SWAGGER
 
+<details>
+  <summary>20210918-0001-INSTALLATION</summary>
+
 ```bash
 //001
 generate project :
@@ -113,6 +116,11 @@ cd rnd-nestjs-mysql
 npm run start
 npm run start:dev
 ```
+
+</details>
+
+<details>
+  <summary>20210918-0002-ENVIRONMENT</summary>
 
 ```bash
 //002
@@ -126,6 +134,11 @@ mysql2 = mysql driver
 ---/info
 ```
 
+</details>
+
+<details>
+  <summary>20210918-0003-GENERATE_USER_MODULE</summary>
+
 ```bash
 //003
 nest g res user
@@ -138,6 +151,11 @@ nest generate resource user = generate user module https://docs.nestjs.com/recip
 
 ```
 
+</details>
+
+<details>
+  <summary>20210918-0004-ENTITY_USER_MODULE</summary>
+
 ```bash
 //004
 npm run start:dev
@@ -147,12 +165,22 @@ setelah entity selesai di buat maka pada database simple_pos akan otomatis terbu
 ---/info
 ```
 
+</details>
+
+<details>
+  <summary>20210918-0005-DATA_TRANSFER_OBJECT</summary>
+
 ```bash
 //005
 ---info
 data transfer object = https://docs.nestjs.com/controllers
 ---/info
 ```
+
+</details>
+
+<details>
+  <summary>20210918-0006-INJECT_USER_REPO_N_CRUD</summary>
 
 ```bash
 //006
@@ -161,6 +189,11 @@ postman = https://www.postman.com/
 inject repository user (entity user), agar memudahkan ketika membuat CRUD
 ---/info
 ```
+
+</details>
+
+<details>
+  <summary>20210919-0007-REQUEST_VALIDATION</summary>
 
 ```bash
 //007
@@ -171,6 +204,11 @@ kedua dependecy tersebut berguna untuk request validation pada API, validasi req
 ---/info
 ```
 
+</details>
+
+<details>
+  <summary>20210919-0008-BCRYPT_HASH</summary>
+
 ```bash
 //008
 npm install -g node-gyp (perlu di install ketika npm i bcrypt , error/stuck node-pre-gyp install --fallback-to-build )
@@ -180,6 +218,11 @@ npm i -D @types/bcrypt
 encryption dan hash : https://docs.nestjs.com/security/encryption-and-hashing
 ---/info
 ```
+
+</details>
+
+<details>
+  <summary>20210919-0009-UNIQUE_VALIDATOR</summary>
 
 ```bash
 //009
@@ -216,6 +259,11 @@ copy dari unique-validator
 ---/info
 ```
 
+</details>
+
+<details>
+  <summary>20210919-0010-EXIST_VALIDATOR</summary>
+
 ```bash
 //010
 
@@ -233,6 +281,11 @@ response :
 }
 ---/info
 ```
+
+</details>
+
+<details>
+  <summary>20210919-0011-SWAGGER_AUTO_GENERATE</summary>
 
 ```bash
 //011
@@ -301,7 +354,10 @@ edit nest-cli.json
 ---/bug info & bug fix
 ```
 
+</details>
 
+<details>
+  <summary>20210922-0012-JWT_STRATEGY</summary>
 
 ```bash
 //012
@@ -334,6 +390,11 @@ ini digunakan (extends) dari PassportStrategy  (memodifikasinya) disesuaikan kon
 
 ```
 
+</details>
+
+<details>
+  <summary>20210923-0013-JWT_AUTH</summary>
+
 ```bash
 //013
 nest g guard auth/jwt  (bawaan dari CLI codenya beberapa di hapus & di rubah)
@@ -349,6 +410,10 @@ ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique val
 ---/bug info & bug fix
 ```
 
+</details>
+
+<details>
+  <summary>20210923-0014-JWT_GUARD_ROUTES</summary>
 
 ```bash
 //014
@@ -422,6 +487,11 @@ ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique val
 ---/bug info & bug fix
 ```
 
+</details>
+
+<details>
+  <summary>20210923-0015-SWAGGER_HEADER_JWT_AUTH</summary>
+
 ```bash
 //015
 
@@ -453,6 +523,11 @@ ini berfungsi agar swagger tau bahwa API ini memerlukan header (Bearer token) un
 ---/info
 ```
 
+</details>
+
+<details>
+  <summary>20210924-0016-JWT_PAYLOAD</summary>
+
 ```bash
 //016
 
@@ -474,6 +549,11 @@ kemudian setelah login berhasil payload tersebut akan di decode/dekripsi berupa 
 dokumentasi jwt : https://jwt.io/
 ---/info
 ```
+
+</details>
+
+<details>
+  <summary>20210926-0017-GLOBAL_JWT_AUTH_SWAGGER_N_CONTROLLER</summary>
 
 ```bash
 //017
@@ -504,11 +584,11 @@ contohnya pada user controller  (membutuhkan header Authorization : Bearer <toke
 ---/info
 ```
 
+</details>
+
 ## ==== /STAGE 1 = BASIC, USER, JWT & SWAGGER
 
 ## ==== STAGE 2 = PRODUK, FILE UPLOAD
-
-</details>
 
 <details>
   <summary>20210926-0018-GENERATE_PRODUK_MODULE</summary>
