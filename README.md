@@ -508,6 +508,11 @@ contohnya pada user controller  (membutuhkan header Authorization : Bearer <toke
 
 ## ==== STAGE 2 = PRODUK, FILE UPLOAD
 
+</details>
+
+<details>
+  <summary>20210926-0018-GENERATE_PRODUK_MODULE</summary>
+
 ```bash
 //018
 nest g res produk
@@ -563,6 +568,10 @@ agar user dapat melakukan relasi pada produk  (hanya optional, lebih baik ditamb
 
 ```
 
+</details>
+
+<details>
+  <summary>20210926-0019-PRODUK_DATA_TRANSFER_OBJECT</summary>
 
 ```bash
 //019
@@ -584,6 +593,10 @@ PickType dari swagger & hanya ambil id nya  // PickType = ambil sebagian
 
 ```
 
+</details>
+
+<details>
+  <summary>20210928-0020-CRUD-PRODUK-SERVICE</summary>
 
 ```bash
 //020
@@ -610,6 +623,10 @@ buat services CRUD produk berdasarkan entity dan edit UpdateProdukDto
 
 ```
 
+</details>
+
+<details>
+  <summary>20210928-0021-FILE-UPLOAD-MULTIPART-FORM-DATA</summary>
 
 ```bash
 //021
@@ -703,6 +720,10 @@ menggunakan teknologi nestjs & payload jwt)
   
 ```
 
+</details>
+
+<details>
+  <summary>20210929-0022-INJECT-DECORATOR-USER</summary>
 
 ```bash
 //022
@@ -768,8 +789,11 @@ setelah ditambahkan ketika di test maka responsenya otomatis akan inject user
   
 ```
 
+</details>
+
 <details>
   <summary>20211003-0023-UPLOAD-CUSTOMIZE-FILENAME</summary>
+
 ```bash
 //023
 
@@ -833,9 +857,8 @@ get product :
 ]
 
 ---/info
-
-
 ```
+
 </details>
 
 
