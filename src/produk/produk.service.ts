@@ -17,7 +17,9 @@ export class ProdukService {
   }
 
   findAll() {
-    return this.produkRepo.find() //`This action returns all produk`;
+    return this.produkRepo.find({
+      relations:['user'] // ManyToOne // src\produk\entities\produk.entity.ts
+    }) //`This action returns all produk`;
   }
 
   findOne(id: number) {

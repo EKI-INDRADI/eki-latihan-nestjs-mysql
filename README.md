@@ -1017,7 +1017,112 @@ bug fix BUG FIX update menghilangkan IsUnique ,
 </details>
 
 
+<details>
+  <summary>20211011-0025-RELATION_PRODUCT_USER</summary>
+  
+```bash
+//025
 
+
+  findAll() {
+    return this.produkRepo.find({
+      relations:['user'] 
+    }) 
+  }
+
+
+---info
+relasi 
+product dengan user ManyToOne 
+
+// src\produk\entities\produk.entity.ts
+    @ManyToOne(() => User, data => data.id)
+    user: User 
+---/info
+
+// src\user\entities\user.entity.ts
+    @Column({select : false})
+    password: string
+
+---info
+{select : false}
+
+berfungsi untuk menghilangkan password pada result, ini berlaku bukan hanya pada product, tapi seluruh data yang terkait dengan user.entity
+password akan hilang diresult
+
+sebelum :
+GET : http://localhost:3000/produk
+[
+  {
+    "id": 1,
+    "barcode": "test",
+    "nama_produk": "test",
+    "deskripsi_produk": "test",
+    "harga_beli": 2400,
+    "harga_jual": 2000,
+    "foto": "PD20211010-USR0002-1633837916127.png",
+    "create_at": "2021-09-28T19:11:29.644Z",
+    "update_at": "2021-10-09T20:51:56.000Z",
+    "user": {
+      "id": 2,
+      "nama_user": "stringst",
+      "email": "string@mail.com",
+      "username": "stringst",
+      "password": "$2b$10$646n44TYIPip12vmm2zz9OdBJJoniOKdcHNLVkdjDgwS0TmQ1n4Qy",
+      "create_at": "2021-09-26T01:28:39.072Z",
+      "update_at": "2021-09-26T01:28:39.072Z"
+    }
+  },
+  ..
+  ..
+]
+
+sesudah : 
+GET : http://localhost:3000/produk
+[
+  {
+    "id": 1,
+    "barcode": "test",
+    "nama_produk": "test",
+    "deskripsi_produk": "test",
+    "harga_beli": 2400,
+    "harga_jual": 2000,
+    "foto": "PD20211010-USR0002-1633837916127.png",
+    "create_at": "2021-09-28T19:11:29.644Z",
+    "update_at": "2021-10-09T20:51:56.000Z",
+    "user": {
+      "id": 2,
+      "nama_user": "stringst",
+      "email": "string@mail.com",
+      "username": "stringst",
+      "create_at": "2021-09-26T01:28:39.072Z",
+      "update_at": "2021-09-26T01:28:39.072Z"
+    }
+  },
+  ..
+  ..
+]
+
+sesudah :
+GET : http://localhost:3000/user
+[
+  ..
+  ..,
+  {
+    "id": 2,
+    "nama_user": "stringst",
+    "email": "string@mail.com",
+    "username": "stringst",
+    "create_at": "2021-09-26T01:28:39.072Z",
+    "update_at": "2021-09-26T01:28:39.072Z"
+  }
+]
+
+---/info
+
+```
+
+</details>
 
 
 
@@ -1030,7 +1135,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:28:10
+next video  02:30:07
  
 ## REFERENSI :
 

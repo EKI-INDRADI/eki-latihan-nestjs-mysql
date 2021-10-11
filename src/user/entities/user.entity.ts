@@ -25,7 +25,7 @@ export class User {
     @Column()
     username: string
 
-    @Column()
+    @Column({select : false})
     password: string
 
     @CreateDateColumn() // auto generate create new Date()
