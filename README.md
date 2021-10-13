@@ -1140,8 +1140,12 @@ password: string
 
 ---bug info
 
-karena ada perubahan pada entity user , untuk keperluan menghilangkan password pada setiap result yang berhubungan dengan user :
-@Column({ name: 'password', select: false }) // {select : false} atau { name: 'password', select: false } sama saja (name hanya untuk set name secara spesifik)
+karena ada perubahan pada entity user , 
+untuk keperluan menghilangkan password pada setiap result yang berhubungan dengan user :
+
+@Column({ name: 'password', select: false }) 
+
+// {select : false} atau { name: 'password', select: false } sama saja (name hanya untuk set name secara spesifik)
 
 pada fungsi 
 
