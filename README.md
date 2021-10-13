@@ -1118,15 +1118,81 @@ GET : http://localhost:3000/user
   }
 ]
 
+
+---info
+
 ---/info
 
 ```
 
 </details>
 
+<details>
+  <summary>20211013-0026-BUG_FIX_USER_ENTITY</summary>
 
 
+```bash
+//026
 
+// src\user\entities\user.entity.ts
+@Column({ name: 'password', select: false })
+password: string
+
+---bug info
+
+karena ada perubahan pada entity user , untuk keperluan menghilangkan password pada setiap result yang berhubungan dengan user :
+@Column({ name: 'password', select: false }) // {select : false} atau { name: 'password', select: false } sama saja (name hanya untuk set name secara spesifik)
+
+pada fungsi 
+
+//src\auth\auth.service.ts
+let user = await this.userService.findUsername(username)  
+
+akan memiliki mendapaatkan password (password tidak akan muncul)
+
+//src\user\user.service.ts
+const valid = this.userService.compare(password, user.password) 
+
+akibatnya password tidak dapat di validasi
+
+//src\user\user.service.ts
+compare(plaintextPassword, hashPassword) {
+    const valid = bcrypt.compareSync(plaintextPassword, hashPassword)
+    return valid
+}
+
+password dekripsi tidak akan sama 
+
+ini semua karenakan  select: false.
+
+---/bug info
+
+---bug fix
+
+src\user\user.service.ts
+-- sebelum
+findUsername(username) {
+ return this.userRepo.findOne({ username: username });
+}
+-- 
+
+
+-- sesudah
+findUsername(username) {
+    return this.userRepo.createQueryBuilder('user')
+      .addSelect('password').where({ username: username }).getRawOne()
+}
+-- 
+
+referensi :     
+- https://stackoverflow.com/questions/65870541/typeorm-nestjs-using-querybuilder
+- https://github.com/typeorm/typeorm/issues/5816
+
+---/bug fix
+
+```
+
+</details>
 
 
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD

@@ -30,7 +30,25 @@ export class UserService {
 
   //================ keperluan auth services
   findUsername(username) {
-    return this.userRepo.findOne({ username: username });
+    // return this.userRepo.findOne({ username: username });
+    return this.userRepo.createQueryBuilder('user')
+      .addSelect('password').where({ username: username }).getRawOne()
+
+    //======================= NOT USED
+    //============ BUG FIX 
+    // https://stackoverflow.com/questions/65870541/typeorm-nestjs-using-querybuilder
+    // https://github.com/typeorm/typeorm/issues/5816
+    // return await this.userRepo
+    //   .createQueryBuilder('users')
+    //   .select('users.first_name', 'fName')
+    //   .addSelect('users.last_name', 'lName')
+    //   .addSelect('adr.address', 'address')
+    //   .addSelect('adr.city', 'city')
+    //   .innerJoin('address', 'adr', 'adr.user_id=users.id')
+    //   .printSql() 
+    //   .getRawMany();
+    // console.log(user)
+    //======================= NOT USED
   }
   //================ / keperluan auth services
 

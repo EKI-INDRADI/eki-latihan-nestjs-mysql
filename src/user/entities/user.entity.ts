@@ -25,7 +25,7 @@ export class User {
     @Column()
     username: string
 
-    @Column({select : false})
+    @Column({ name: 'password', select: false }) // {select : false} atau { name: 'password', select: false } sama saja
     password: string
 
     @CreateDateColumn() // auto generate create new Date()
@@ -38,8 +38,8 @@ export class User {
     // ERD : user - produk
     // ERD : 1 - *
     // agar user dapat melakukan relasi pada produk 
-    @OneToMany(()=>Produk, data => data.id)  
-    produk : Produk
+    @OneToMany(() => Produk, data => data.id)
+    produk: Produk
 
 
 }
