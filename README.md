@@ -1260,7 +1260,7 @@ findUsername(username) {
 --- 
 
 
-NOTE BUG FIX PRODUCT : 
+NOTE BUG FIX USER : 
 
 Kedua fungsi bug fix tersebut sama fungsinya tetapi untuk BUG FIX VERSI SAYA itu memanfaatkan createQueryBuilder
 
