@@ -1145,7 +1145,8 @@ untuk keperluan menghilangkan password pada setiap result yang berhubungan denga
 
 @Column({ name: 'password', select: false }) 
 
-// {select : false} atau { name: 'password', select: false } sama saja (name hanya untuk set name secara spesifik)
+// {select : false} atau { name: 'password', select: false } 
+// sama saja (name hanya untuk set name secara spesifik)
 
 pada fungsi 
 
