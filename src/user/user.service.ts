@@ -30,9 +30,10 @@ export class UserService {
 
   //================ keperluan auth services
   findUsername(username) {
-    // return this.userRepo.findOne({ username: username });
-    return this.userRepo.createQueryBuilder('user')
-      .addSelect('password').where({ username: username }).getRawOne()
+    // return this.userRepo.findOne({ username: username }); // SEEBELUM BUG FIX
+    // return this.userRepo.createQueryBuilder('user') 
+    //   .addSelect('password').where({ username: username }).getRawOne() // OLD BUG FIX (VERSI SAYA)
+    return this.userRepo.findOne({ username: username }, { select: ['id', 'password'] }); //NEW BUG FIX (VERSI VIDEO)
 
     //======================= NOT USED
     //============ BUG FIX 

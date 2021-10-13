@@ -72,9 +72,9 @@ export class ProdukController {
     })
   }))
   @ApiConsumes('multipart/form-data') // agr swagger merubah format default (JSON) , menjadi multipart/form-data
-  @ApiBody({ type: CreateProdukDto })
+  // @ApiBody({ type: CreateProdukDto }) // CLASS VALIDATOR BUG FIX : OLD BUG FIX
   //==============================/COPY FROM POST CONTROLLER
-  // @ApiBody({ type: UpdateProdukDto }) 
+  @ApiBody({ type: UpdateProdukDto }) // CLASS VALIDATOR BUG FIX : NEW BUG FIX
 
   // update(@Param('id') id: string, @Body() updateProdukDto: UpdateProdukDto) { // sebelum  update upload file
   update(@Param('id') id: string, @InjectUser() updateProdukDto: UpdateProdukDto, @UploadedFile() foto: Express.Multer.File) {

@@ -408,6 +408,10 @@ login authentication & generate token
 ---bug info & bug fix
 ada bug jika menggunakan extend UserDto, karena pada UserDto memiliki unique validator (memvalidasi jika username sama), akibatnya tidak dapat login(generate token)
 ---/bug info & bug fix
+
+NOTE : pada video youtube baru menjelaskan bug fix ini pada menit 2:33:00 +
+atau pada branch : 20211014-0027-BUG_FIX_UNIQUE_VALIDATOR
+
 ```
 
 </details>
@@ -1194,6 +1198,196 @@ referensi :
 - https://github.com/typeorm/typeorm/issues/5816
 
 ---/bug fix
+
+```
+
+</details>
+
+
+<details>
+  <summary>20211014-0027-BUG_FIX_UNIQUE_VALIDATOR</summary>
+
+ini ada branch optional (saran tetap mengikuti branch ini) sebenarnya ini sudah dibug fix dicode saya (menggunakan versi saya),
+sama saja, cumaa saya tetap sampaikan dari versi video cara bug fix nya yang sedikit berbeda dengan saya.
+sebenarnya masalah ini sudah ada dari branch 20210923-0013-JWT_AUTH , tetapi sudah saya bug fix di branch tersebut dan selanjutnya.
+
+```bash
+
+//027
+1. BUG FIX AUTH_DTO keperluan untuk get token saat login agar tidak error username telah digunakan
+
+
+A. src\auth\auth.dto.ts
+--- sebelum BUG FIX
+export class AuthDto extends PickType(UserDto,['username','password']){}
+--- 
+--- sesudah - OLD BUG FIX (VERSI SAYA) & NEW BUG FIX (VERSI VIDEO) = SAMA
+export class AuthDto {
+    @ApiProperty()
+    @IsString()
+    @MaxLength(32)
+    @MinLength(8)
+    @IsNotEmpty()
+    username: string
+
+    @ApiProperty()
+    @IsString()
+    @MaxLength(32)
+    @MinLength(8)
+    @IsNotEmpty()
+    password: string
+}
+--- 
+
+B. src\user\user.service.ts
+--- sebelum BUG FIX
+findUsername(username) {
+   return this.userRepo.findOne({ username: username });
+}
+--- 
+
+--- sesudah - OLD BUG FIX (VERSI SAYA)
+findUsername(username) {
+  return this.userRepo.createQueryBuilder('user')
+    .addSelect('password').where({ username: username }).getRawOne()
+}
+--- 
+
+--- sesudah - NEW BUG FIX (VERSI VIDEO)
+findUsername(username) {
+   return this.userRepo.findOne({ username: username }, { select: ['id', 'password'] });
+}
+--- 
+
+
+NOTE BUG FIX PRODUCT : 
+
+Kedua fungsi bug fix tersebut sama fungsinya tetapi untuk BUG FIX VERSI SAYA itu memanfaatkan createQueryBuilder
+
+
+2. BUG FIX UPDATE PRODUCT, agar barcode tidak error telah digunakan
+
+A1. src\etc\validator\unique-validator.ts (NEW BUG FIX (VERSI VIDEO))
+--- sebelum BUG FIX
+async validate(value: any, args: ValidationArguments) {
+   let find = { [args.constraints[1]]: args.value }
+   let check = await getConnection().getRepository(args.constraints[0]).findOne(find)
+   if (check) return false // jika ada return false
+   return true
+}
+--- 
+
+--- sesudah - NEW BUG FIX (VERSI VIDEO)
+async validate(value: any, args: ValidationArguments) {
+    let find = {
+        where: { [args.constraints[1]]: args.value }
+    }
+
+    if (args.object['id']){
+        find.where['id'] = Not(args.object['id']) // { Not } from 'typeorm';
+    }
+
+    let check = await getConnection().getRepository(args.constraints[0]).findOne(find)
+    if (check) return false // jika ada return false
+    return true
+}
+--- 
+
+B1. src\produk\produk.controller.ts (NEW BUG FIX (VERSI VIDEO))
+
+--- sebelum BUG FIX
+ @Patch(':id')
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => {
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = "PD"
+          + new Date().getFullYear()
+          + ("0" + (new Date().getMonth() + 1)).slice(-2)
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+          + Date.now()
+        cb(null, eki_auto_generate + extname(file.originalname))
+      }
+    })
+  }))
+  @ApiConsumes('multipart/form-data') 
+  @ApiBody({ type: CreateProdukDto }) 
+  
+  update(@Param('id') id: string, @InjectUser() updateProdukDto: UpdateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    if (foto) {
+      updateProdukDto.foto = foto.filename
+    }
+    return this.produkService.update(+id, updateProdukDto);
+  }
+--- 
+
+--- sesudah - NEW BUG FIX (VERSI VIDEO)
+ @Patch(':id')
+  @UseInterceptors(FileInterceptor('foto', {
+    storage: diskStorage({
+      destination: './assets/produk',
+      filename: (req: any, file, cb) => {
+        let number_user_id = Number(req.user.id)
+        let eki_auto_generate = "PD"
+          + new Date().getFullYear()
+          + ("0" + (new Date().getMonth() + 1)).slice(-2)
+          + ("0" + new Date().getDate()).slice(-2) + "-"
+          + "USR" + number_user_id.toString().padStart((String(number_user_id).length > 4) ? String(number_user_id).length : 4, '0') + "-"
+          + Date.now()
+        cb(null, eki_auto_generate + extname(file.originalname))
+      }
+    })
+  }))
+  @ApiConsumes('multipart/form-data') 
+  @ApiBody({ type: UpdateProdukDto })
+  
+  update(@Param('id') id: string, @InjectUser() updateProdukDto: UpdateProdukDto, @UploadedFile() foto: Express.Multer.File) {
+    if (foto) {
+      updateProdukDto.foto = foto.filename
+    }
+    return this.produkService.update(+id, updateProdukDto);
+  }
+
+--- 
+
+C1. src\produk\dto\update-produk.dto.ts (NEW BUG FIX (VERSI VIDEO))
+
+--- sebelum BUG FIX
+export class UpdateProdukDto extends PartialType(ProdukDto) {} 
+--- 
+
+--- sesudah - NEW BUG FIX (VERSI VIDEO)
+export class UpdateProdukDto extends PartialType(ProdukDto) {}  // tidak ada perubahan
+---
+
+
+A2. src\produk\dto\update-produk.dto.ts (OLD BUG FIX (VERSI SAYA))
+
+--- sebelum BUG FIX
+export class UpdateProdukDto extends PartialType(ProdukDto) {} 
+--- 
+
+--- sesudah - NEW BUG FIX (VERSI VIDEO)
+export class UpdateProdukDto extends PartialType(ProdukDto) {
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  barcode: string
+ }
+---
+
+
+NOTE BUG FIX PRODUCT : 
+
+BUG FIX VERSI VIDEO (A1-B1-C1), jauh lebih baik untuk penanganan barcode,
+kelebihannya parameter barcode tidak dapat di hacking / inject dari luar karena ada validasi lebih dalam untuk barcode (hanya barcode yang di perbolehkan yang jika id yang digunakan sesuai dengan barcode)
+
+BUG FIX VERSI SAYA (A2), lebih sedikit kenapa ? 
+secara logika barcode tidak mungkin dapat di rubah artinya barcode pada aplikasi akan di disable (tidak dapat di rubah), maka jika case seperti tersebut tidak perlu banyak bug fix
+
+
 
 ```
 
