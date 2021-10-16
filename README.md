@@ -1454,6 +1454,10 @@ update src\user\entities\user.entity.ts
 update src\konsumen\konsumen.module.ts
 update src\konsumen\konsumen.service.ts
 
+---info 
+update Entity
+---
+
 ```
 
 </details>
