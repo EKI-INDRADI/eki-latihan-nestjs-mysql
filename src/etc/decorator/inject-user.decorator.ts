@@ -7,7 +7,7 @@ export const InjectUser = createParamDecorator((data: any, ctx: ExecutionContext
     // @IsObject()  
     // user: UserDto 
     // src\produk\dto\create-produk.dto.ts
-    req.body.user = { id : req.user.id}
+    req.body.user = { id : req.user.id} // DATA INI RESULT JIKA KONDISI SUDAH LOGIN
  
     return req.body
 })

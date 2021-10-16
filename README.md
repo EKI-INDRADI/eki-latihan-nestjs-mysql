@@ -1429,7 +1429,6 @@ generate resource rekening
 </details>
 
 
-
 <details>
   <summary>20211016-0029-ENITITY_KONSUMEN</summary>
 
@@ -1462,6 +1461,75 @@ update Entity
 
 </details>
 
+
+<details>
+  <summary>20211017-0030-CRUD_JWT_SWAGGER_VALIDATOR_KONSUMEN</summary>
+
+```bash
+
+//029
+update src\konsumen\konsumen.service.ts
+update src\konsumen\dto\create-konsuman.dto.ts
+update src\konsumen\dto\update-konsuman.dto.ts
+update src\konsumen\konsumen.controller.ts
+
+
+---info 
+jika error 
+inject-user.decorator ....
+
+berarti perlu login dahulu untuk dapat data user
+@ApiBearerAuth() // (LOGO GEMBOK SWAGGER) perlu tambahkan di controller
+@UseGuards(JwtGuard) // verifikasi token swagger (by swagger authorize)
+---
+
+update code bug fix src\konsumen\entities\konsuman.entity.ts
+
+---info 
+- sebelum -
+
+    User: User 
+
+- sesudah -
+
+    user: User // bug fix user key kecil
+
+---/info 
+
+update code update src\konsumen\dto\create-konsuman.dto.ts
+
+---info 
+- sebelum -
+
+    User: CreateUserDto 
+
+- sesudah -
+
+    user: CreateUserDto // bug fix user key kecil
+
+---/info 
+
+
+update code update src\produk\produk.controller.ts
+
+---info 
+- sebelum -
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.produkService.remove(+id);
+  }
+
+- sesudah -
+
+    user: CreateUserDto // bug fix user key kecil
+
+---/info 
+
+```
+
+</details>
+
 ## ==== /STAGE 3 = KONSUMEN
 
 
@@ -1470,7 +1538,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:43:46
+next video  02:55:13
  
 ## REFERENSI :
 

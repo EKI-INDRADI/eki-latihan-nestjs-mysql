@@ -1,14 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { KonsumenService } from './konsumen.service';
-import { CreateKonsumanDto } from './dto/create-konsuman.dto';
+import { CreateKonsumanDto, KonsumenId } from './dto/create-konsuman.dto';
 import { UpdateKonsumanDto } from './dto/update-konsuman.dto';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
+@ApiTags('Konsumen')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
+// TypeError: Cannot read property 'id' of undefined
+// at D:\_eki-latihan-nestjs-mysql\rnd-nestjs-mysql\src\etc\decorator\inject-user.decorator.ts:10:37
 @Controller('konsumen')
 export class KonsumenController {
-  constructor(private readonly konsumenService: KonsumenService) {}
+  constructor(private readonly konsumenService: KonsumenService) { }
+
 
   @Post()
-  create(@Body() createKonsumanDto: CreateKonsumanDto) {
+  @ApiBody({ type: CreateKonsumanDto }) // SWAGGER POST SCHEMA (TAMBAHKAN JIKA PARAMETER REQUEST BODY TIDAK ADA DI SWAGGER)
+  create(@InjectUser() createKonsumanDto: CreateKonsumanDto) {
+    // create(@Body() createKonsumanDto: CreateKonsumanDto) {
     return this.konsumenService.create(createKonsumanDto);
   }
 
@@ -23,12 +34,17 @@ export class KonsumenController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateKonsumanDto: UpdateKonsumanDto) {
+  @ApiBody({ type: UpdateKonsumanDto })  // SWAGGER PATCH SCHEMA (TAMBAHKAN JIKA PARAMETER REQUEST BODY TIDAK ADA DI SWAGGER)
+  // update(@Param('id') id: string, @Body() updateKonsumanDto: UpdateKonsumanDto) {
+  update(@Param('id') id: string, @InjectUser() updateKonsumanDto: UpdateKonsumanDto) {
     return this.konsumenService.update(+id, updateKonsumanDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.konsumenService.remove(+id);
+  // remove(@Param('id') id: string) {
+  // return this.konsumenService.remove(+id);
+  //}
+  remove(@Param() id: KonsumenId) { // agar tervalidasi
+    return this.konsumenService.remove(id.id); // agar tervalidasi
   }
 }

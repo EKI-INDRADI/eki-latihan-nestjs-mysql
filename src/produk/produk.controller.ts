@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ProdukService } from './produk.service';
-import { CreateProdukDto } from './dto/create-produk.dto';
+import { CreateProdukDto, ProdukIdDto } from './dto/create-produk.dto';
 import { UpdateProdukDto } from './dto/update-produk.dto';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
@@ -85,7 +85,10 @@ export class ProdukController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.produkService.remove(+id);
+  // remove(@Param('id') id: string) {
+  //   return this.produkService.remove(+id);
+  // }
+  remove(@Param() id: ProdukIdDto) {   // agar tervalidasi
+    return this.produkService.remove(id.id); // agar tervalidasi
   }
 }

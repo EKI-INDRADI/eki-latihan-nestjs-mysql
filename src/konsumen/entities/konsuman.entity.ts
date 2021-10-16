@@ -3,27 +3,27 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Up
 
 @Entity()
 export class Konsuman {
- @PrimaryGeneratedColumn()
- id : number
+    @PrimaryGeneratedColumn()
+    id: number
 
- @Column()
- nama_konsumen : string
+    @Column()
+    nama_konsumen: string
 
- @Column()
- alamat_konsumen : string
+    @Column()
+    alamat_konsumen: string
 
- @Column()
- email_konsumen : string
+    @Column()
+    email_konsumen: string
 
- @Column()
- no_hp_konsumen : string
+    @Column()
+    no_hp_konsumen: string
 
- @CreateDateColumn()
- create_at : Date
+    @CreateDateColumn()
+    create_at: Date
 
- @UpdateDateColumn({onUpdate : 'CURRENT_TIMESTAMP(6)'})
- update_at : Date
+    @UpdateDateColumn({ onUpdate: 'CURRENT_TIMESTAMP(6)' })
+    update_at: Date
 
- @ManyToOne(() =>User, data => data.id)
- User : User
+    @ManyToOne(() => User, data => data.id)
+    user: User // bug fix user key kecil
 }
