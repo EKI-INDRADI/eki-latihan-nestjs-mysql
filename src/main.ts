@@ -2,6 +2,7 @@ import { BadRequestException, ValidationError, ValidationPipe } from '@nestjs/co
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as fs from 'fs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,6 +35,9 @@ async function bootstrap() {
     swaggerOptions: { docExpansion: "none" }
   }
   const swaggerDocument = SwaggerModule.createDocument(app, configSwagger)
+
+  fs.writeFileSync("./swagger-spec.json", JSON.stringify(swaggerDocument)); // generate swagger json
+
   SwaggerModule.setup('api-docs', app, swaggerDocument, configCustomSwagger)
   // api-docs = routes
   //============== /SWAGGER

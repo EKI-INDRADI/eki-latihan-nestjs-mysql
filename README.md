@@ -1535,6 +1535,60 @@ update code update src\produk\produk.controller.ts
 
 ## ==== /STAGE 3 = KONSUMEN
 
+## ==== STAGE 4 = EXPORT SWAGGER JSON & IMPORT TO POSTMAN
+
+(OPTIONAL)
+
+<details>
+  <summary>20211017-0031-EXPORT_SWAGGER_JSON_N_IMPORT_TO_POSTMAN</summary>
+
+```bash
+//031
+```
+
+```bash
+--- EXPORT SWAGGER JSON 
+untuk generate file  json dapat menggunakan fitur fs ,
+
+untuk membuatnya menjadi api dengan result json :
+
+-- CODE :
+SwaggerModule.setup('api-docs', app, swaggerDocument, configCustomSwagger)
+-- /CODE :
+
+http://localhost:3000/api-docs <-- OPEN API SWAGGER 
+http://localhost:3000/api-docs-json <-- untuk membuatnya menjadi JSON tinggal tambahkan '-json'
+
+--- /EXPORT SWAGGER JSON 
+
+```
+
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/raw/master/EXPORT_SWAGGER_JSON.png)
+
+
+```bash
+
+--- IMPORT SWAGGER JSON  TO POSTMAN
+DOWNLOAD POSTMAN : https://www.postman.com/
+
+import -> link -> http://localhost:3000/api-docs-json -> IMPORT -> IMPORT
+--- /IMPORT SWAGGER JSON  TO POSTMAN
+
+```
+
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/raw/master/IMPORT_SWAGGER_JSON_TO_POSTMAN_1.png)
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/raw/master/IMPORT_SWAGGER_JSON_TO_POSTMAN_2.png)
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/raw/master/IMPORT_SWAGGER_JSON_TO_POSTMAN_3.png)
+
+referensi : 
+- https://github.com/nestjs/swagger/issues/158 (EXPORT SWAGGER JSON)
+- https://stackoverflow.com/questions/39072216/how-to-import-swagger-apis-into-postman (IMPORT SWAGGER JSON TO POSTMAN)
+
+
+
+</details>
+
+## ==== /STAGE 4 = GENERATE EXPORT SWAGGER JSON & IMPORT TO POSTMAN
 
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
