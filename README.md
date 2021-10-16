@@ -1588,7 +1588,7 @@ referensi :
 
 </details>
 
-## ==== /STAGE 4 = GENERATE EXPORT SWAGGER JSON & IMPORT TO POSTMAN
+## ==== /STAGE 4 = EXPORT SWAGGER JSON & IMPORT TO POSTMAN
 
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
