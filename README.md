@@ -1467,7 +1467,7 @@ update Entity
 
 ```bash
 
-//029
+//030
 update src\konsumen\konsumen.service.ts
 update src\konsumen\dto\create-konsuman.dto.ts
 update src\konsumen\dto\update-konsuman.dto.ts
