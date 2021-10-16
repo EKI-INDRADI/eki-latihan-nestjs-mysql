@@ -1571,7 +1571,7 @@ http://localhost:3000/api-docs-json <-- untuk membuatnya menjadi JSON tinggal ta
 --- IMPORT SWAGGER JSON  TO POSTMAN
 DOWNLOAD POSTMAN : https://www.postman.com/
 
-import -> link -> http://localhost:3000/api-docs-json -> IMPORT -> IMPORT
+import -> link -> http://localhost:3000/api-docs-json -> CONTINUE -> IMPORT
 --- /IMPORT SWAGGER JSON  TO POSTMAN
 
 ```
