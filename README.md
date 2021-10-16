@@ -1522,7 +1522,10 @@ update code update src\produk\produk.controller.ts
 
 - sesudah -
 
-    user: CreateUserDto // bug fix user key kecil
+  @Delete(':id')
+  remove(@Param() id: ProdukIdDto) {   // agar tervalidasi
+    return this.produkService.remove(id.id); // agar tervalidasi
+  }
 
 ---/info 
 
