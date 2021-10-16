@@ -1401,8 +1401,6 @@ secara logika barcode tidak mungkin dapat di rubah artinya barcode pada aplikasi
 <details>
   <summary>20211016-0028-GENERATE_KONSUMEN_N_REKENING</summary>
 
-
-
 ```bash
 
 //028
@@ -1425,6 +1423,36 @@ nest g res rekening
 ---info
 generate resource rekening
 ---
+
+```
+
+</details>
+
+
+
+<details>
+  <summary>20211016-0029-ENITITY_KONSUMEN</summary>
+
+```bash
+
+//029
+update enitity class src\konsumen\entities\konsuman.entity.ts
+update entities src\app.module.ts
+
+---info bug
+NestJs BUG Entity classs name
+
+Konsuman // (yang di generate adalah Konsumen) tetapi classnya Konsuman, entities\konsuman.entity.ts  
+ini adalah kesalahan dari nest, kemungkinan karena auto checking english translate men jadi man
+---
+
+---info 
+selanjutnya tabel schema konsumen akan auto generate pada databases
+---
+
+update src\user\entities\user.entity.ts
+update src\konsumen\konsumen.module.ts
+update src\konsumen\konsumen.service.ts
 
 ```
 

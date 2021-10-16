@@ -12,6 +12,7 @@ import { ProdukModule } from './produk/produk.module';
 import { Produk } from './produk/entities/produk.entity';
 import { KonsumenModule } from './konsumen/konsumen.module';
 import { RekeningModule } from './rekening/rekening.module';
+import { Konsuman } from './konsumen/entities/konsuman.entity';
 
 @Module({
   imports: [
@@ -23,11 +24,13 @@ import { RekeningModule } from './rekening/rekening.module';
       username: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
-      entities : [
+      entities: [
         User, // jangan lupa tambahin setelah selesai buat user.entity.js
-        Produk // karena adanya  synchronize : true, maka produk tabel akan otomatis digenerate didatabase
+        Produk, // karena adanya  synchronize : true, maka produk tabel akan otomatis digenerate didatabase
+        Konsuman // (yang di generate adalah Konsumen) tetapi classnya Konsuman, entities\konsuman.entity.ts  
+        //ini adalah kesalahan dari nest, kemungkinan karena auto checking english translate men jadi man
       ],
-      synchronize : true // entity yang dibuat tablenya akan otomatis di generate
+      synchronize: true // entity yang dibuat tablenya akan otomatis di generate
     }),
     UserModule,
     AuthModule,
@@ -38,4 +41,4 @@ import { RekeningModule } from './rekening/rekening.module';
   controllers: [AppController],
   providers: [AppService, ExistValidator, UniqueValidator],
 })
-export class AppModule {}
+export class AppModule { }

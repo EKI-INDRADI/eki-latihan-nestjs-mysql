@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateKonsumanDto } from './dto/create-konsuman.dto';
 import { UpdateKonsumanDto } from './dto/update-konsuman.dto';
+import { Konsuman } from './entities/konsuman.entity';
 
 @Injectable()
 export class KonsumenService {
+
+  constructor(
+    @InjectRepository(Konsuman) private konsumenRepo: Repository<Konsuman> // (yang di generate adalah Konsumen) tetapi classnya Konsuman, entities\konsuman.entity.ts  
+    //ini adalah kesalahan dari nest, kemungkinan karena auto checking english translate men jadi man
+  ) { }
+
   create(createKonsumanDto: CreateKonsumanDto) {
     return 'This action adds a new konsuman';
   }
