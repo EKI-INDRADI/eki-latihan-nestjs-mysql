@@ -1396,6 +1396,44 @@ secara logika barcode tidak mungkin dapat di rubah artinya barcode pada aplikasi
 
 ## ==== /STAGE 2 = PRODUK, FILE UPLOAD
 
+## ==== STAGE 3 = KONSUMEN
+
+<details>
+  <summary>20211016-0028-GENERATE_KONSUMEN_N_REKENING</summary>
+
+
+
+```bash
+
+//028
+
+nest g res konsumen
+
+- rest api
+- crud yes
+
+---info
+generate resource konsumen
+---
+
+
+nest g res rekening
+
+- rest api
+- crud yes
+
+---info
+generate resource rekening
+---
+
+```
+
+</details>
+
+## ==== /STAGE 3 = KONSUMEN
+
+
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
