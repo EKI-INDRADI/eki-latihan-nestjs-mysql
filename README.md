@@ -1436,8 +1436,8 @@ generate resource rekening
 ```bash
 
 //029
-update enitity class src\konsumen\entities\konsuman.entity.ts
-update entities src\app.module.ts
+update src\konsumen\entities\konsuman.entity.ts
+update src\app.module.ts
 
 ---info bug
 NestJs BUG Entity classs name
