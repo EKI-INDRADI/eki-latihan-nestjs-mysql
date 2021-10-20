@@ -1590,12 +1590,52 @@ referensi :
 
 ## ==== /STAGE 4 = EXPORT SWAGGER JSON & IMPORT TO POSTMAN
 
+## ==== STAGE 5 = REKENING
+
+<details>
+  <summary>20211020-0032-CRUD_JWT_SWAGGER_VALIDATOR_REKENING</summary>
+
+```bash
+/032
+
+update src\rekening\entities\rekening.entity.ts
+update src\rekening\dto\create-rekening.dto.ts
+update src\user\entities\user.entity.ts
+update src\app.module.ts
+
+---info
+secara otomatis tabel rekening akan terbuat
+---/info
+
+update src\rekening\dto\create-rekening.dto.ts
+update src\rekening\dto\update-rekening.dto.ts
+update src\rekening\rekening.module.ts
+update src\rekening\rekening.service.ts
+
+---info
+membuat services crud , schema untuk swagger & validasi
+---/info
+
+update src\rekening\rekening.controller.ts
+
+---info
+membuat controller crud , jwt & swagger
+---/info
+
+Note : ini mirip seperti crud sebelumnya
+
+```
+
+</details>
+
+## ==== /STAGE 5 = REKENING
+
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  02:55:13
+next video  03:08:43
  
 ## REFERENSI :
 

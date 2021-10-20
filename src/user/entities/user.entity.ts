@@ -1,5 +1,6 @@
 import { Konsuman } from "src/konsumen/entities/konsuman.entity";
 import { Produk } from "src/produk/entities/produk.entity";
+import { Rekening } from "src/rekening/entities/rekening.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
@@ -45,5 +46,7 @@ export class User {
     @OneToMany(() => Konsuman, data => data.id) // (yang di generate adalah Konsumen) tetapi classnya Konsuman, entities\konsuman.entity.ts  
     konsumen: Konsuman  //ini adalah kesalahan dari nest, kemungkinan karena auto checking english translate men jadi man
 
+    @OneToMany(() => Rekening, data => data.id) 
+    rekening: Rekening  
 
 }
