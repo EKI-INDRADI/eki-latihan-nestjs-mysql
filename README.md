@@ -1631,11 +1631,86 @@ Note : ini mirip seperti crud sebelumnya
 ## ==== /STAGE 5 = REKENING
 
 
+## ==== STAGE 6 = PENJUALAN
+
+<details>
+  <summary>20211031-0033-PENJUALAN-ENTITY</summary>
+
+```bash
+/033
+
+nest g res penjualan -> rest api -> yes
+
+update src\penjualan\entities\penjualan.entity.ts
+update src\app.module.ts (Penjaualn)
+
+---info
+buat tabel penjualan
+---/info
+
+buat entity manual src\penjualan\entities\penjualan-item.entity.ts
+update src\app.module.ts (Penjualan_item)
+
+---info
+buat tabel penjualanItem
+---/info
+
+buat entity manual src\penjualan\entities\penjualan-bayar.entity.ts
+update src\app.module.ts (Penjualan_bayar)
+
+---info
+buat tabel penjualanBayar
+---/info
+
+update src\penjualan\penjualan.module.ts
+
+---info
+Import penjualan,penjualanItem,penjualanBayar
+---/info
+
+update src\penjualan\entities\penjualan.entity.ts
+
+@OneToMany(() => PenjualanItem, data => data.id, {cascade:true})
+item: PenjualanItem[] //ini array
+
+@OneToMany(() => PenjualanBayar, data => data.id, {cascade:true})
+bayar: PenjualanBayar[] //ini array
+
+---info
+{cascade:true} == ketika penjualan ini di hapus/di update, maka secara otomatis harus memutus relasi penjualanItem dan penjualanBayar, agar tidak ter-select kembali
+---/info
+
+update src\penjualan\entities\penjualan-item.entity.ts
+
+@ManyToOne(() => Penjualan, data => data.id, { onDelete: "CASCADE", onUpdate: "CASCADE" })
+penjualan: Penjualan
+
+---info
+Aktifkan CASCADE pada penjualanItem
+---/info
+
+update src\penjualan\entities\penjualan-bayar.entity.ts
+
+@ManyToOne(() => Penjualan, data => data.id, { onDelete: "CASCADE", onUpdate: "CASCADE" })
+penjualan: Penjualan
+
+---info
+Aktifkan CASCADE pada penjualanBayar
+---/info
+
+
+```
+
+</details>
+
+## ==== /STAGE 6 = PENJUALAN
+
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  03:08:43
+next video  03:21:50
  
 ## REFERENSI :
 
