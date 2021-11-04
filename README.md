@@ -1703,6 +1703,97 @@ Aktifkan CASCADE pada penjualanBayar
 
 </details>
 
+<details>
+  <summary>20211105-0034-DTO-PENJUALAN-BAYAR-ITEM</summary>
+
+```bash
+/034
+
+update src\penjualan\dto\create-penjualan.dto.ts
+
+@ApiProperty({type:KonsumenId})
+@ValidateNested())
+@IsObject()
+konsumen: KonsumenId 
+
+---info
+@ApiProperty({type:KonsumenId}) berguna untuk :
+hanya perlu konsumen id nya saja
+
+@ValidateNested() berguna untuk :
+api ini akan memvalidasi dto konsumen ( src\konsumen\dto\create-konsuman.dto.ts), 
+untuk keperluan IsExist ID nya (sudah ada atau tdk)
+
+@IsObject()
+konsumen: KonsumenId  berguna untuk :
+hanya ambil id nya
+---/info
+
+
+buat manual src\penjualan\dto\penjualan-item.dto.ts 
+
+@ApiProperty({type:ProdukIdDto})
+@IsObject()
+@ValidateNested()
+produk: ProdukIdDto
+
+---info
+(untuk keperluan buat dto Penjualan agar bisa buat DTO dengan Array dari penjualanItem)
+---/info
+
+    
+buat manual src\penjualan\dto\penjualan-bayar.dto.ts 
+
+@ApiProperty({ type: RekeningIdDto })
+@IsObject()
+@ValidateNested()
+rekening: RekeningIdDto
+
+---info
+(untuk keperluan buat dto Penjualan agar bisa buat DTO dengan Array dari penjualanBayar) 
+---/info
+
+
+
+update src\penjualan\dto\create-penjualan.dto.ts
+
+@ApiProperty({ type: [PenjualanItemDto] }) 
+@IsArray()
+@ValidateNested({each : true}) 
+item: PenjualanItemDto[]
+
+@ApiProperty({ type: [PenjualanBayarDto] }) 
+@ValidateNested()
+@ValidateNested({each : true}) 
+bayar: PenjualanBayarDto[]
+
+---info
+update penjualan menggunakan DTO dari penjaualn bayar & penjualan item
+
+@ApiProperty({ type: [PenjualanItemDto] })  berguna untuk :
+keperluan untuk data berupa array, menggunakan type : [...], perlu buat DTO nya
+
+@IsArray()
+@ValidateNested({each : true}) berguna untuk :
+karena array maka perlu di each true (untuk loop data) & setiap arraynya akan di validasi
+
+item: PenjualanItemDto[] berguna untuk :
+mendefinisikan array
+---/info
+
+update src\penjualan\penjualan.controller.ts
+@ApiTags('Penjualan')
+
+update src\penjualan\dto\create-penjualan.dto.ts
+export class CreatePenjualanDto extends OmitType(PenjualanDto, ['id']) { }
+
+---info
+keperluan untuk check swagger schema
+http://localhost:3000/api-docs
+---/info
+
+```
+
 ## ==== /STAGE 6 = PENJUALAN
 
 
@@ -1710,7 +1801,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  03:21:50
+next video  03:33:50 
  
 ## REFERENSI :
 
