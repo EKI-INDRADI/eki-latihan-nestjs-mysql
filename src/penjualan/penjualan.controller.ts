@@ -30,6 +30,7 @@ export class PenjualanController {
   }
 
   @Patch(':id')
+  @ApiBody({type:UpdatePenjualanDto})
   update(@Param('id') id: string, @PenjualanProses() updatePenjualanDto: UpdatePenjualanDto) { //  update(@Param('id') id: string, @Body() updatePenjualanDto: UpdatePenjualanDto) {
     return this.penjualanService.update(+id, updatePenjualanDto);
   }

@@ -18,8 +18,16 @@ export class PenjualanService {
     return this.penjualanRepo.find({ relations: ['user', 'konsumen'] })
   }
 
-  findOne(id: number) {
-    return this.penjualanRepo.findOne({ relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
+  async findOne(id: number) {
+
+    let result = await this.penjualanRepo.findOne(id, { relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
+    if (result) {
+      return result
+    } else {
+      return ({ message: "data not found" })
+    }
+    // return this.penjualanRepo.findOne({ relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
+    // return this.penjualanRepo.findOne(id, { relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
   }
 
   update(id: number, updatePenjualanDto: UpdatePenjualanDto) {

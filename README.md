@@ -2049,6 +2049,245 @@ req.body.user = user
 </details>
 
 
+
+
+<details>
+  <summary>20211107-0036-RUD-PENJUALAN-BAYAR-ITEM</summary>
+
+```bash
+/036  
+
+update src\penjualan\penjualan.service.ts
+
+------------- sebelum
+findOne(id: number) {
+return this.penjualanRepo.findOne({ relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
+}
+------------- sebelum
+
+------------- sesudah
+async findOne(id: number) {
+  let result = await this.penjualanRepo.findOne(id, { relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
+  if (result) {
+    return result
+  } else {
+    return ({ message: "data not found" })
+  }
+}
+------------- sesudah
+
+---info
+bug fix findOne
+
+result = {
+  "id": 13,
+  "no_faktur": "FK-115",
+  "tanggal": "2021-11-07T00:00:00.000Z",
+  "total_transaksi": 150000,
+  "total_potongan": 2500,
+  "total_bayar": 100000,
+  "create_at": "2021-11-07T00:29:32.586Z",
+  "update_at": "2021-11-07T00:29:32.586Z",
+  "user": {
+    "id": 2,
+    "nama_user": "stringst",
+    "email": "string@mail.com",
+    "username": "stringst",
+    "create_at": "2021-09-26T01:28:39.072Z",
+    "update_at": "2021-09-26T01:28:39.072Z"
+  },
+  "konsumen": {
+    "id": 4,
+    "nama_konsumen": "string4",
+    "alamat_konsumen": "string4",
+    "email_konsumen": "string4@gmail.com",
+    "no_hp_konsumen": "132131131",
+    "create_at": "2021-10-16T11:26:55.096Z",
+    "update_at": "2021-10-16T11:26:55.096Z"
+  },
+  "item": [
+    {
+      "id": 9,
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "create_at": "2021-11-07T00:29:32.597Z",
+      "update_at": "2021-11-07T00:29:32.597Z",
+      "produk": {
+        "id": 7,
+        "barcode": "tes123456",
+        "nama_produk": "tes123456",
+        "deskripsi_produk": "test123456",
+        "harga_beli": 1000,
+        "harga_jual": 1500,
+        "foto": "PD20211010-USR0002-1633834448773.png",
+        "create_at": "2021-10-09T19:54:09.537Z",
+        "update_at": "2021-10-09T19:54:09.537Z"
+      }
+    },
+    {
+      "id": 10,
+      "jumlah_jual": 10,
+      "harga_jual": 5000,
+      "potongan": 1500,
+      "create_at": "2021-11-07T00:29:32.603Z",
+      "update_at": "2021-11-07T00:29:32.603Z",
+      "produk": {
+        "id": 6,
+        "barcode": "tes12345",
+        "nama_produk": "tes12345",
+        "deskripsi_produk": "test12345",
+        "harga_beli": 1000,
+        "harga_jual": 1500,
+        "foto": "20211010-USR0002.png",
+        "create_at": "2021-10-09T19:46:56.597Z",
+        "update_at": "2021-10-09T19:46:56.597Z"
+      }
+    }
+  ],
+  "bayar": [
+    {
+      "id": 5,
+      "tanggal_bayar": "2021-11-07T00:00:00.000Z",
+      "jumlah_bayar": 100000,
+      "create_at": "2021-11-07T00:29:32.592Z",
+      "update_at": "2021-11-07T00:29:32.592Z",
+      "rekening": {
+        "id": 2,
+        "nama_rekening": "BCA",
+        "keterangan_rekening": "Melalui BCA",
+        "type_rekening": "2",
+        "create_at": "2021-10-19T23:16:59.906Z",
+        "update_at": "2021-10-19T23:16:59.906Z"
+      }
+    }
+  ]
+}
+
+---/info
+
+
+update src\penjualan\penjualan.controller.ts
+
+@Patch(':id')
+@ApiBody({type:UpdatePenjualanDto})
+update(@Param('id') id: string, @PenjualanProses() updatePenjualanDto: UpdatePenjualanDto) {  string, @Body() updatePenjualanDto: UpdatePenjualanDto) {
+    return this.penjualanService.update(+id, updatePenjualanDto);
+}
+---info
+tambahkan @ApiBody({type:UpdatePenjualanDto}) untuk schema swagger
+
+
+example_update = 
+id 11
+{
+  "id": 11,
+  "no_faktur": "FK-113",
+  "tanggal": "2021-11-07",
+  "user": {
+    "id": 2
+  },
+  "konsumen": {
+    "id": 4
+   
+  },
+  "item": [
+    {
+      "id": 9,  <--- jika menggunakan id maka id akan berubah (replace)
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "produk": {
+        "id": 7
+      }
+    },
+    {   <--- jika tidak menggunakan id maka id  tidak akan repace mirip $set  update (partial upadate pada mongodb)
+      "jumlah_jual": 20,
+      "harga_jual": 15000,
+      "potongan": 1500,
+      "produk": {
+        "id": 6
+      }
+    }
+  ],
+  "bayar": [
+    {
+      "id": 5,
+      "tanggal_bayar": "2021-11-07",
+      "jumlah_bayar": 100000,
+      "rekening": {
+        "id": 2
+      }
+    }
+  ]
+}
+
+
+
+response = {
+  "id": 11,
+  "no_faktur": "FK-113",
+  "tanggal": "2021-11-07T00:00:00.000Z",
+  "user": {
+    "id": 2
+  },
+  "konsumen": {
+    "id": 4
+  },
+  "item": [
+    {
+      "id": 9,
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "produk": {
+        "id": 7
+      },
+      "user": {
+        "id": 2
+      },
+      "update_at": "2021-11-07T03:00:07.000Z"
+    },
+    {
+      "jumlah_jual": 20,
+      "harga_jual": 15000,
+      "potongan": 1500,
+      "produk": {
+        "id": 6
+      },
+      "user": {
+        "id": 2
+      },
+      "id": 11,
+      "create_at": "2021-11-07T03:00:07.662Z",
+      "update_at": "2021-11-07T03:00:07.662Z"
+    }
+  ],
+  "bayar": [
+    {
+      "id": 5,
+      "tanggal_bayar": "2021-11-07T00:00:00.000Z",
+      "jumlah_bayar": 100000,
+      "rekening": {
+        "id": 2
+      },
+      "user": {
+        "id": 2
+      },
+      "update_at": "2021-11-07T03:00:07.000Z"
+    }
+  ],
+  "total_transaksi": 400000,
+  "total_potongan": 2500,
+  "total_bayar": 100000,
+  "update_at": "2021-11-07T03:00:07.000Z"
+}
+---/info
+
+
+```
+
+</details>
 ## ==== /STAGE 6 = PENJUALAN
 
 
