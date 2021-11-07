@@ -1,4 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
-import { CreatePenjualanDto } from './create-penjualan.dto';
+import { CreatePenjualanDto, PenjualanDto } from './create-penjualan.dto';
 
-export class UpdatePenjualanDto extends PartialType(CreatePenjualanDto) {}
+// export class UpdatePenjualanDto extends PartialType(CreatePenjualanDto) {}
+
+export class UpdatePenjualanDto extends PartialType(PenjualanDto) {}

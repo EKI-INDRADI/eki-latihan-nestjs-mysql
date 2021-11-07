@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreatePenjualanDto } from './dto/create-penjualan.dto';
 import { UpdatePenjualanDto } from './dto/update-penjualan.dto';
+import { Penjualan } from './entities/penjualan.entity';
 
 @Injectable()
 export class PenjualanService {
+  constructor(
+    @InjectRepository(Penjualan) private penjualanRepo: Repository<Penjualan>
+  ) { }
   create(createPenjualanDto: CreatePenjualanDto) {
-    return 'This action adds a new penjualan';
+    return this.penjualanRepo.save(createPenjualanDto);
   }
 
   findAll() {
-    return `This action returns all penjualan`;
+    return this.penjualanRepo.find({ relations: ['user', 'konsumen'] })
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} penjualan`;
+    return this.penjualanRepo.findOne({ relations: ['user', 'konsumen', 'item', 'item.produk', 'bayar', 'bayar.rekening'] })
   }
 
   update(id: number, updatePenjualanDto: UpdatePenjualanDto) {
-    return `This action updates a #${id} penjualan`;
+    updatePenjualanDto.id = id
+    return this.penjualanRepo.save(updatePenjualanDto)
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} penjualan`;
+  async remove(id: number) {
+    let jual = await this.penjualanRepo.findOne(id)
+    return this.penjualanRepo.remove(jual)
   }
 }

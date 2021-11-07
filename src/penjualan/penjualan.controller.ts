@@ -1,17 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { PenjualanService } from './penjualan.service';
-import { CreatePenjualanDto } from './dto/create-penjualan.dto';
+import { CreatePenjualanDto, PenjualanId } from './dto/create-penjualan.dto';
 import { UpdatePenjualanDto } from './dto/update-penjualan.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { PenjualanProses } from './penjualan-proses.decorator';
+import { JwtGuard } from 'src/auth/jwt.guard';
 
 @ApiTags('Penjualan')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 @Controller('penjualan')
 export class PenjualanController {
-  constructor(private readonly penjualanService: PenjualanService) {}
+  constructor(private readonly penjualanService: PenjualanService) { }
 
   @Post()
-  create(@Body() createPenjualanDto: CreatePenjualanDto) {
-    return this.penjualanService.create(createPenjualanDto);
+  @ApiBody({ type: CreatePenjualanDto })
+  create(@PenjualanProses() createPenjualanDto: CreatePenjualanDto) { // biar otomatis kalkulasi // create(@Body() createPenjualanDto: CreatePenjualanDto) {
+   return this.penjualanService.create(createPenjualanDto);
   }
 
   @Get()
@@ -25,12 +30,48 @@ export class PenjualanController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePenjualanDto: UpdatePenjualanDto) {
+  update(@Param('id') id: string, @PenjualanProses() updatePenjualanDto: UpdatePenjualanDto) { //  update(@Param('id') id: string, @Body() updatePenjualanDto: UpdatePenjualanDto) {
     return this.penjualanService.update(+id, updatePenjualanDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.penjualanService.remove(+id);
+  remove(@Param() id: PenjualanId) { //  remove(@Param('id') id: string) {
+    return this.penjualanService.remove(id.id);
   }
+}
+
+
+let example_create = {
+  "no_faktur": "FK-111",
+  "tanggal": "2021-11-07",
+  "konsumen": {
+    "id": 4
+  },
+  "item": [
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "produk": {
+        "id": 7
+      }
+    },
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 5000,
+      "potongan": 1500,
+      "produk": {
+        "id": 6
+      }
+    }
+  ],
+  "bayar": [
+    {
+      "tanggal_bayar": "2021-11-07",
+      "jumlah_bayar": 100000,
+      "rekening": {
+        "id": 2
+      }
+    }
+  ]
 }

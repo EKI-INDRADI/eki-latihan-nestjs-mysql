@@ -28,10 +28,10 @@ export class Penjualan {
     @ManyToOne(() => Konsuman, data => data.id)
     konsumen: Konsuman 
     
-    @OneToMany(() => PenjualanItem, data => data.id, {cascade:true})
+    @OneToMany(() => PenjualanItem, data => data.penjualan, {cascade:true}) // harusnya .penjualan  bukan id harus di liad dari array per element/object PenjualanItem // @OneToMany(() => PenjualanItem, data => data.id, {cascade:true})
     item: PenjualanItem[] //ini array
 
-    @OneToMany(() => PenjualanBayar, data => data.id, {cascade:true})
+    @OneToMany(() => PenjualanBayar, data => data.penjualan, {cascade:true}) // harusnya .penjualan  bukan id harus di liad dari array per element/object PenjualanBayar //    @OneToMany(() => PenjualanBayar, data => data.id, {cascade:true}) 
     bayar: PenjualanBayar[] //ini array
 
     @CreateDateColumn()

@@ -15,8 +15,8 @@ export class PenjualanBayar {
     @Column()
     jumlah_bayar : number
 
-    @Column()
-    potongan : number
+    // @Column()   // harusnya ini gak perlu
+    // potongan : number // harusnya ini gak perlu
 
     @ManyToOne(() => Penjualan, data => data.id, { onDelete: "CASCADE", onUpdate: "CASCADE" })
     penjualan: Penjualan 

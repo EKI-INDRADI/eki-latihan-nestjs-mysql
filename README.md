@@ -1796,6 +1796,263 @@ http://localhost:3000/api-docs
 
 </details>
 
+
+<details>
+  <summary>20211107-0035-CREATE-PENJUALAN-BAYAR-ITEM</summary>
+
+```bash
+/035
+
+update src\penjualan\penjualan.service.ts 
+update src\penjualan\dto\update-penjualan.dto.ts
+
+---info
+service & update dto 
+---/info
+
+
+nest g decorator penjualan/penjualan-proses
+update src\penjualan\penjualan-proses.decorator.ts
+update src\penjualan\penjualan.controller.ts
+
+---info
+untuk keperluan kalkulasi dari total/subtotal/proses lainnya pada penjualan saja (maka tidak perlu dibuat didalam etc)
+---/info
+
+update src\penjualan\penjualan-proses.decorator.ts (copy dari src\etc\decorator\inject-user.decorator.ts)
+update src\penjualan\penjualan.controller.ts (ubah @Body() ke @PenjualanProses())
+
+---info
+ubah semua @Body() pada controller menjadi @PenjualanProses() (untuk otomatis kalkulasi dari request)
+biar otomatis kalkulasi 
+---/info
+
+update src\penjualan\dto\create-penjualan.dto.ts (delete condition update for swagger)
+update src\penjualan\penjualan.controller.ts (delete condition update for swagger)
+
+---info
+delete condition update
+---/info
+
+bug fix src\penjualan\entities\penjualan-bayar.entity.ts
+
+---info
+bug fix harusnya gak perlu ada 
+@Column() 
+potongan : number
+---/info
+
+bug fix src\penjualan\entities\penjualan.entity.ts (gak pake id, harusnya pake penjualan)
+
+---info
+perlu cek penjualan, penjualan_bayar dan penjualan_item 
+
+    @OneToMany(() => PenjualanItem, data => data.id, {cascade:true}) // harusnya .penjualan  bukan id harus di liad dari array per element/object PenjualanItem // @OneToMany(() => PenjualanItem, data => data.id, {cascade:true})
+    item: PenjualanItem[] //ini array
+
+    @OneToMany(() => PenjualanBayar, data => data.id, {cascade:true}) // harusnya .penjualan  bukan id harus di liad dari array per element/object PenjualanBayar //    @OneToMany(() => PenjualanBayar, data => data.id, {cascade:true}) 
+    bayar: PenjualanBayar[] //ini array
+---/info
+
+
+check database penjualan_bayar
+check database penjualan_item
+check database penjualan
+
+---info
+menit 3:40:00 s/d  3:48:00
+
+menit 3:47:10 s/d 3:47:21  untuk id bayar dan id item sudah benar ( tidak null )
+
+tetapi return nya tidak benar
+---/info
+
+bug fix src\penjualan\dto\create-penjualan.dto.ts
+    
+---info
+
+------------- sebelum
+@ApiProperty({ type: [PenjualanItemDto] }) 
+@IsArray()
+@ValidateNested({ each: true }) 
+item: PenjualanItemDto[] 
+
+@ApiProperty({ type: [PenjualanBayarDto] }) 
+@ValidateNested()
+@ValidateNested({ each: true }) 
+------------- /sebelum
+
+
+------------- sesudah
+import { Type } from "class-transformer"
+
+@ApiProperty({ type: [PenjualanItemDto] }) 
+@IsArray()
+@ValidateNested({ each: true }) 
+@Type(()=>PenjualanItemDto)
+item: PenjualanItemDto[] 
+
+@ApiProperty({ type: [PenjualanBayarDto] }) 
+@IsArray()
+@Type(()=>PenjualanBayarDto)
+@ValidateNested({ each: true }) 
+------------- /sesudah
+
+
+
+
+
+bug fix  src\penjualan\dto\penjualan-bayar.dto.ts
+
+---info
+jika error "Field , 'jumlah_bayar' doesn't have a default"
+
+pada
+src\penjualan\dto\penjualan-bayar.dto.ts  itu karena validasi value belum tambahkan
+
+@IsNumber()
+jumlah_bayar: number
+---/info
+
+hasilnya = 
+
+request :
+{
+  "no_faktur": "FK-113",
+  "tanggal": "2021-11-07",
+  "konsumen": {
+    "id": 4
+  },
+  "item": [
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "produk": {
+        "id": 7
+      }
+    },
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 5000,
+      "potongan": 1500,
+      "produk": {
+        "id": 6
+      }
+    }
+  ],
+  "bayar": [
+    {
+      "tanggal_bayar": "2021-11-07",
+      "jumlah_bayar": 100000,
+      "rekening": {
+        "id": 2
+      }
+    }
+  ]
+}
+
+
+response :
+{
+  "no_faktur": "FK-113",
+  "tanggal": "2021-11-07T00:00:00.000Z",
+  "konsumen": {
+    "id": 4
+  },
+  "item": [
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 10000,
+      "potongan": 1000,
+      "produk": {
+        "id": 7
+      },
+      "user": {
+        "id": 2
+      },
+      "id": 5,
+      "create_at": "2021-11-06T23:48:19.043Z",
+      "update_at": "2021-11-06T23:48:19.043Z"
+    },
+    {
+      "jumlah_jual": 10,
+      "harga_jual": 5000,
+      "potongan": 1500,
+      "produk": {
+        "id": 6
+      },
+      "user": {
+        "id": 2
+      },
+      "id": 6,
+      "create_at": "2021-11-06T23:48:19.049Z",
+      "update_at": "2021-11-06T23:48:19.049Z"
+    }
+  ],
+  "bayar": [
+    {
+      "tanggal_bayar": "2021-11-07T00:00:00.000Z",
+      "jumlah_bayar": 100000,
+      "rekening": {
+        "id": 2
+      },
+      "user": {
+        "id": 2
+      },
+      "id": 3,
+      "create_at": "2021-11-06T23:48:19.039Z",
+      "update_at": "2021-11-06T23:48:19.039Z"
+    }
+  ],
+  "total_transaksi": 150000,
+  "total_potongan": 2500,
+  "total_bayar": 100000,
+  "id": 11,
+  "create_at": "2021-11-06T23:48:19.033Z",
+  "update_at": "2021-11-06T23:48:19.033Z"
+}
+
+---info
+
+bug fix src\penjualan\dto\create-penjualan.dto.ts
+
+@ApiHideProperty() 
+@IsObject()
+user: UserIdDto
+
+---info
+bug fix src\penjualan\dto\create-penjualan.dto.ts
+
+perlu validasi ( minimal 1 validator  cth :   @IsObject())
+---/info
+
+bug fix src\penjualan\penjualan-proses.decorator.ts
+
+---info
+
+jika error ( setelah menambahkan IsObject() )
+
+Unknown column 'NaN' in 'field list'
+QueryFailedError: Unknown column 'NaN' in 'field list'
+
+------------- sebelum
+let user = { id: req.user.id }
+req.body.user = { id: user }
+------------- /sebelum
+
+------------- sesudah
+let user = { id: req.user.id }
+req.body.user = user
+------------- /sesudah
+---/info
+
+
+```
+
+</details>
+
+
 ## ==== /STAGE 6 = PENJUALAN
 
 
@@ -1803,7 +2060,8 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  03:33:50 
+next video  03:49:27 [create penjualan done]
+
  
 ## REFERENSI :
 

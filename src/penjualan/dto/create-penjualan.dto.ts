@@ -1,4 +1,5 @@
-import { ApiHideProperty, ApiProperty, OmitType } from "@nestjs/swagger"
+import { ApiHideProperty, ApiProperty, OmitType, PickType } from "@nestjs/swagger"
+import { Type } from "class-transformer"
 import { IsArray, IsDate, IsNumber, IsObject, IsString, ValidateNested } from "class-validator"
 import { IsExist } from "src/etc/validator/exist-validator"
 import { IsUnique } from "src/etc/validator/unique-validator"
@@ -43,18 +44,22 @@ export class PenjualanDto {
     @ApiProperty({ type: [PenjualanItemDto] })  // keperluan untuk data berupa array, menggunakan type : [...], perlu buat DTO nya
     @IsArray()
     @ValidateNested({ each: true }) // karena array maka perlu di each true (untuk loop data) & setiap arraynya akan di validasi
+    @Type(() => PenjualanItemDto)
     item: PenjualanItemDto[] //ini array
 
     @ApiProperty({ type: [PenjualanBayarDto] })  // keperluan untuk data berupa array, menggunakan type : [...], perlu buat DTO nya
-    @ValidateNested()
+    @IsArray()
     @ValidateNested({ each: true }) // karena array maka perlu di each true (untuk loop data) & setiap arraynya akan di validasi
+    @Type(() => PenjualanBayarDto)
     bayar: PenjualanBayarDto[] //ini array
 
     @ApiHideProperty() //jangan munculkan pada swagger
+    @IsObject()
     user: UserIdDto
 
 }
 
 // export class CreatePenjualanDto { }
 export class CreatePenjualanDto extends OmitType(PenjualanDto, ['id']) { }
+export class PenjualanId extends PickType(PenjualanDto, ['id']) { }
 

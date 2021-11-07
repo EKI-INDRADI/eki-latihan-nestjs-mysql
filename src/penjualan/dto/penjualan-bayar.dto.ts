@@ -1,5 +1,5 @@
 import { ApiHideProperty, ApiProperty } from "@nestjs/swagger"
-import { IsDate, IsObject, IsOptional, ValidateNested } from "class-validator"
+import { IsDate, IsNumber, IsObject, IsOptional, ValidateNested } from "class-validator"
 import { RekeningIdDto } from "src/rekening/dto/create-rekening.dto"
 import { CreateUserDto, UserIdDto } from "src/user/dto/create-user.dto"
 
@@ -14,6 +14,7 @@ export class PenjualanBayarDto {
     tanggal_bayar: Date
 
     @ApiProperty()
+    @IsNumber()
     jumlah_bayar: number
 
     @ApiProperty({ type: RekeningIdDto })
