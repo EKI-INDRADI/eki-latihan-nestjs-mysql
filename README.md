@@ -1898,10 +1898,6 @@ item: PenjualanItemDto[]
 @ValidateNested({ each: true }) 
 ------------- /sesudah
 
-
-
-
-
 bug fix  src\penjualan\dto\penjualan-bayar.dto.ts
 
 ---info
@@ -1912,7 +1908,7 @@ src\penjualan\dto\penjualan-bayar.dto.ts  itu karena validasi value belum tambah
 
 @IsNumber()
 jumlah_bayar: number
----/info
+
 
 hasilnya = 
 
@@ -2013,7 +2009,7 @@ response :
   "update_at": "2021-11-06T23:48:19.033Z"
 }
 
----info
+---/info
 
 bug fix src\penjualan\dto\create-penjualan.dto.ts
 
