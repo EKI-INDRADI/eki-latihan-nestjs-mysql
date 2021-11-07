@@ -2296,7 +2296,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  03:49:27 [create done]
+next video  03:53:39 [create done]
 
  
 ## REFERENSI :
