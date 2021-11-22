@@ -2292,11 +2292,44 @@ response = {
 ## ==== /STAGE 6 = PENJUALAN
 
 
+## ==== STAGE 7 = PAGENATION
+<details>
+  <summary>20211122-0037-PAGENATION-MODULE</summary>
+
+```bash
+/037 untuk keperluan pembuatan pagenation, count data & pencarian 
+
+
+---info
+
+buatlah data dummy untuk test pagenation ,
+disini saya menggunakan  Database Client (cweijan) pada extention visual studio code
+untuk membuat data dummy
+
+---
+
+buat folder src\etc\dto
+
+update src\etc\dto\page-dto.ts
+
+generate service untuk implementasi pagenation
+
+nest g service etc/service/page
+
+update src\etc\service\page\page.service.ts
+
+
+```
+
+</details>
+
+## ==== /STAGE 7 = PAGENATION
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  03:53:39 [create done]
+next video  04:04:00 [pagenation module]
 
  
 ## REFERENSI :
