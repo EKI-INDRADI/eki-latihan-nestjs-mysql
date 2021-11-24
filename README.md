@@ -2324,13 +2324,93 @@ update src\etc\service\page\page.service.ts
 
 </details>
 
+<details>
+  <summary>20211124-0038-PRODUK-PAGENATION</summary>
+
+```bash
+/038 
+
+update src\produk\dto\create-produk.dto.ts
+update src\produk\produk.controller.ts
+update src\produk\produk.service.ts
+
+---before
+export class ProdukService {
+  constructor(
+    @InjectRepository(Produk) private produkRepo: Repository<Produk> // inject produk entites
+  ) {}
+  ...
+  ...
+  ...
+
+   findAll() {
+    return this.produkRepo.find({relations: ['user']}) 
+    ...
+    ...
+---/before
+
+---after
+
+export class ProdukService extends PageService {
+  constructor(
+    @InjectRepository(Produk) private produkRepo: Repository<Produk> // inject produk entites
+  ) {
+    super()
+  }
+  ...
+  ...
+  ...
+
+  findAll(filter) {
+    return this.generatePage(filter, this.produkRepo, {
+      relations: ['user']
+    })
+    ...
+    ...
+
+---/after
+
+update src\produk\produk.controller.ts
+
+---before
+...
+...
+  findAll(@Query() page: FindProdukDto) {
+    return this.produkService.findAll();
+  }
+ ...
+ ...
+---/before
+
+---after
+...
+...
+  findAll(@Query() page: FindProdukDto) {
+    return this.produkService.findAll(page);
+  }
+ ...
+ ...
+---/after
+
+
+
+update src\etc\service\page\page.service.ts ( bug fix search update)
+
+---info
+fitur skip limit , find data & bearer maximum limit
+---/info
+
+```
+  
+</details>
+
 ## ==== /STAGE 7 = PAGENATION
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  04:04:00 [pagenation module]
+next video  04:12:19 [pagenation produk done]
 
  
 ## REFERENSI :

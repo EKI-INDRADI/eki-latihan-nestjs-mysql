@@ -1,25 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PageService } from 'src/etc/service/page/page.service';
 import { Repository } from 'typeorm';
 import { CreateProdukDto } from './dto/create-produk.dto';
 import { UpdateProdukDto } from './dto/update-produk.dto';
 import { Produk } from './entities/produk.entity';
 
 @Injectable()
-export class ProdukService {
+// export class ProdukService {
+export class ProdukService extends PageService {
   // buat constructor()
   constructor(
     @InjectRepository(Produk) private produkRepo: Repository<Produk> // inject produk entites
-  ) { }
+  ) {
+    super()
+  }
 
   create(createProdukDto: CreateProdukDto) {
     return this.produkRepo.save(createProdukDto) //'This action adds a new produk';
   }
 
-  findAll() {
-    return this.produkRepo.find({
-      relations:['user'] // ManyToOne // src\produk\entities\produk.entity.ts
-    }) //`This action returns all produk`;
+  findAll(filter) {
+    return this.generatePage(filter, this.produkRepo, {
+      relations: ['user']
+    })
+
+    // findAll() {
+    // return this.produkRepo.find({
+    // relations: ['user'] // ManyToOne // src\produk\entities\produk.entity.ts
+    // }) //`This action returns all produk`;
   }
 
   findOne(id: number) {
