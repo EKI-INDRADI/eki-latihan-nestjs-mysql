@@ -2454,7 +2454,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  04:24:41 [pagenation rekening done]
+end video  04:24:41 [pagenation rekening done]
 
  
 ## REFERENSI :
