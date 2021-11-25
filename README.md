@@ -2434,13 +2434,27 @@ update src\konsumen\konsumen.controller.ts
 </details>
 
 
+<details>
+  <summary>20211125-0041-REKENING-PAGENATION</summary>
+
+```bash
+/041
+
+update src\rekening\dto\create-rekening.dto.ts
+update src\rekening\rekening.service.ts
+update src\rekening\rekening.controller.ts
+
+```
+</details>
+
+
 ## ==== /STAGE 7 = PAGENATION
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  04:19:04 [pagenation konsumen done]
+next video  04:24:41 [pagenation rekening done]
 
  
 ## REFERENSI :

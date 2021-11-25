@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { RekeningService } from './rekening.service';
-import { CreateRekeningDto, RekeningIdDto } from './dto/create-rekening.dto';
+import { CreateRekeningDto, FindRekening, RekeningIdDto, ResponRekeningDto } from './dto/create-rekening.dto';
 import { UpdateRekeningDto } from './dto/update-rekening.dto';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
 
@@ -21,8 +21,11 @@ export class RekeningController {
   }
 
   @Get()
-  findAll() {
-    return this.rekeningService.findAll();
+  @ApiOkResponse({ type: ResponRekeningDto })
+  findAll(@Query() page: FindRekening) {
+    return this.rekeningService.findAll(page);
+    // findAll() {
+    //   return this.rekeningService.findAll();
   }
 
   @Get(':id')
@@ -31,7 +34,7 @@ export class RekeningController {
   }
 
   @Patch(':id')
-  @ApiBody({ type: UpdateRekeningDto })  
+  @ApiBody({ type: UpdateRekeningDto })
   update(@Param('id') id: string, @InjectUser() updateRekeningDto: UpdateRekeningDto) {
     // update(@Param('id') id: string, @Body() updateRekeningDto: UpdateRekeningDto) {
     return this.rekeningService.update(+id, updateRekeningDto);
