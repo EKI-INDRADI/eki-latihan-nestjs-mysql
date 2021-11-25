@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, Query, Req, Res } from '@nestjs/common';
 import { ProdukService } from './produk.service';
 import { CreateProdukDto, FindProdukDto, ProdukIdDto, ResponProdukDto } from './dto/create-produk.dto';
 import { UpdateProdukDto } from './dto/update-produk.dto';
@@ -9,6 +9,7 @@ import { diskStorage } from 'multer';
 import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
 // import { extname } from 'path/posix'; // rename 'path/posix' to 'path'
 import { extname } from 'path';
+import { Request } from 'express'; //MANUAL QUERY
 
 @ApiTags('Produk')
 @ApiBearerAuth()
@@ -93,4 +94,31 @@ export class ProdukController {
   remove(@Param() id: ProdukIdDto) {   // agar tervalidasi
     return this.produkService.remove(id.id); // agar tervalidasi
   }
+
+
+  @Post('/produk-manual-query')
+  @ApiBody({ type: Object })
+  produkManualQuery(
+    @Req()
+    req: Request
+    // ,
+    // @Res()
+    // res: Response,
+  ): any {
+
+    let req_body_example = {
+      "condition": {
+        "barcode": "a"
+      },
+      "skip": 25,
+      "limit": 10,
+      "enable_count": 1,
+      "enable_manual_relation_user": 1
+    }
+
+    // console.log(req.body)
+    return this.produkService.GetProduk(req.body)
+  }
+
+
 }

@@ -2450,11 +2450,365 @@ update src\rekening\rekening.controller.ts
 
 ## ==== /STAGE 7 = PAGENATION
 
+
+## ==== STAGE 8 = MANUAL QUERY
+
+<details>
+  <summary>20211125-0042-PRODUK-MANUAL-QUERY</summary>
+
+```bash
+/041
+
+update src\produk\produk.service.ts
+
+--- code
+import { InjectConnection , ...} from '@nestjs/typeorm';
+
+
+ constructor(
+    ...,
+    @InjectConnection() private MySqlConnection: Connection
+
+  ) {
+   ...
+  }
+
+/=================== MANUAL QUERY
+
+  async GetProduk(req_body: any) {
+
+    let res_json: any = {}
+
+    // let query_params = `
+    // SELECT * 
+    // FROM produk 
+    // WHERE 
+    // barcode LIKE '%${req_body.condition.barcode}%' OR 
+    // nama_produk LIKE  '%${req_body.condition.nama_produk}%' OR 
+    // deskripsi_produk LIKE '%${req_body.condition.deskripsi_produk}%'
+    // LIMIT 10 
+    // OFFSET 20 `
+
+    let query_params = `
+    SELECT * 
+    FROM produk `
+
+    if (req_body.condition.barcode) {
+      query_params = query_params + `WHERE `
+      query_params = query_params + `barcode LIKE '%${req_body.condition.barcode}%'  `
+    }
+
+    let query_count_params = query_params
+
+
+    if (req_body.limit) {
+      query_params = query_params + ` LIMIT ${req_body.limit}  `
+    }
+
+    if (req_body.skip) {
+      query_params = query_params + ` OFFSET ${req_body.skip}  `
+    }
+
+
+    let result = await this.MySqlConnection.query(query_params)
+
+    if (req_body.enable_count == 1) {
+      let result_count = await this.MySqlConnection.query(query_count_params)
+
+      res_json.total = result_count.length
+
+      if (req_body.limit) {
+        res_json.page = Math.ceil(req_body.skip / req_body.limit)
+        res_json.pages = Math.ceil(result_count.length / req_body.limit)
+      }
+    }
+
+    if (req_body.enable_manual_relation_user == 1) {
+      for (let i_a = 0; i_a < result.length; i_a++) {
+        let getUser = await this.MySqlConnection.query(`SELECT * FROM user WHERE id = ${result[i_a].userId} `)
+
+        delete getUser[0].password
+        result[i_a].user = getUser[0]
+        delete result[i_a].userId
+      }
+    }
+
+    res_json.data = result
+
+    return res_json
+  }
+
+EKI NOTE : 
+INI HANYA PEMBELAJARAN PADA CASE NYATA
+QUERY INI AKAN BERAT KARENA MENGGUNAKAN LOOPING UNTUK SETIAP GET USER , SEBAIKNYA TETAP MENGGUNAKAN ENTITY RELATION 
+UNTUK KECEPATAN YANG LEBIH BAIK DI SARANKAN  MENGGUNAKAN : 
+ENTITY RELATION > QUERY BUILDER JOIN / RAW QUERY JOIN > QUERY BUILDER LOOPING / RAW QUERY LOOPING
+(lebih besar lebih baik)
+
+  //=================== MANUAL QUERY
+
+--- / code 
+- inject root connection
+- manual raw query sql
+
+update src\produk\produk.controller.ts 
+- custom plural / url route 
+- enable request handle
+- enable request object swagger
+
+--- code
+import { Request } from 'express';
+
+ @Post('/produk-manual-query')
+  @ApiBody({ type: Object })
+  produkManualQuery(
+    @Req()
+    req: Request
+  ): any {
+
+    let req_body_example = {
+      "condition": {
+        "barcode": "a"
+      },
+      "skip": 25,
+      "limit": 10,
+      "enable_count": 1,
+      "enable_manual_relation_user": 1
+    }
+
+    return this.produkService.GetProduk(req.body)
+  }
+--- / code
+
+
+--- REQUEST
+
+   {
+      "condition": {
+        "barcode": "a"
+      },
+      "skip": 25,
+      "limit": 10,
+      "enable_count": 1,
+      "enable_manual_relation_user": 1
+    }
+
+--- /REQUEST
+
+--- RESPONSE
+
+{
+  "total": 34,
+  "page": 3,
+  "pages": 4,
+  "data": [
+    {
+      "id": 151,
+      "barcode": "ekhpvjckad",
+      "deskripsi_produk": "axhbrvvoidntbdl",
+      "harga_beli": 23036,
+      "harga_jual": 147195,
+      "foto": "oibmm",
+      "create_at": "1982-02-18T09:50:30.000Z",
+      "update_at": "1983-03-18T22:58:54.000Z",
+      "nama_produk": "idiltwyqikrpene",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 154,
+      "barcode": "abofmytrot",
+      "deskripsi_produk": "mxjomavulewyedd",
+      "harga_beli": 92374,
+      "harga_jual": 174320,
+      "foto": "wdydl",
+      "create_at": "1986-07-28T00:31:45.000Z",
+      "update_at": "2020-09-20T01:08:43.000Z",
+      "nama_produk": "ormqoagcgnynkue",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 157,
+      "barcode": "iqyzgswapx",
+      "deskripsi_produk": "ityfxdwvdrsnjyh",
+      "harga_beli": 30232,
+      "harga_jual": 43575,
+      "foto": "dqhtc",
+      "create_at": "1988-06-23T05:27:58.000Z",
+      "update_at": "1977-07-27T20:39:55.000Z",
+      "nama_produk": "hgwyldfvlyjxvmx",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 167,
+      "barcode": "kxxakwvrox",
+      "deskripsi_produk": "nqcsznshaucidvu",
+      "harga_beli": 47406,
+      "harga_jual": 146928,
+      "foto": "pvker",
+      "create_at": "2012-04-12T05:00:33.000Z",
+      "update_at": "2000-06-07T21:39:41.000Z",
+      "nama_produk": "urjclwwmfeoodxh",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 168,
+      "barcode": "dpngrnqagj",
+      "deskripsi_produk": "nocjbjcuhyxqzfq",
+      "harga_beli": 59072,
+      "harga_jual": 185868,
+      "foto": "ciuok",
+      "create_at": "1981-02-13T00:06:21.000Z",
+      "update_at": "2000-01-17T14:41:31.000Z",
+      "nama_produk": "unbtfdamycipohu",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 174,
+      "barcode": "peagidnjiy",
+      "deskripsi_produk": "nrtrnsriimgpuur",
+      "harga_beli": 24073,
+      "harga_jual": 44612,
+      "foto": "ebsab",
+      "create_at": "1997-01-13T13:22:23.000Z",
+      "update_at": "2001-11-04T06:02:17.000Z",
+      "nama_produk": "effbqzbiqjgvfrs",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 175,
+      "barcode": "pblkpaggqr",
+      "deskripsi_produk": "adnoivrbksyxlce",
+      "harga_beli": 75650,
+      "harga_jual": 101387,
+      "foto": "fcvxw",
+      "create_at": "1980-11-08T00:43:43.000Z",
+      "update_at": "1979-05-21T06:45:20.000Z",
+      "nama_produk": "yhkjphpzvbmrgtr",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 178,
+      "barcode": "puplstksya",
+      "deskripsi_produk": "taqbgbmtdwdeiot",
+      "harga_beli": 9041,
+      "harga_jual": 195108,
+      "foto": "fcedq",
+      "create_at": "1972-04-07T22:25:46.000Z",
+      "update_at": "2018-01-28T04:15:20.000Z",
+      "nama_produk": "combbifahqypgpe",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    },
+    {
+      "id": 198,
+      "barcode": "sspnracmgu",
+      "deskripsi_produk": "fnwzuwzmguucnde",
+      "harga_beli": 54297,
+      "harga_jual": 49839,
+      "foto": "blrqd",
+      "create_at": "2021-09-25T12:53:03.000Z",
+      "update_at": "2009-11-27T12:53:52.000Z",
+      "nama_produk": "ghupmkpqsmmwpvx",
+      "user": {
+        "id": 1,
+        "nama_user": "admin2021",
+        "email": "admin2021@email.com",
+        "username": "admin2021",
+        "create_at": "2021-09-25T23:31:51.376Z",
+        "update_at": "2021-09-25T23:31:51.376Z"
+      }
+    }
+  ]
+}
+
+--- /RESPONSE
+
+referensi :  https://docs.nestjs.com/techniques/database
+
+
+EKI NOTE : 
+Jika ingin lebih cepat lagi
+- rubah adapter default NestJs (express) (-+ 6rb/sec) adapter dengan NestJs Fastify adapter (-+ 30rb/sec)
+- compress request (untuk mengurangi proses request/response payload )
+- jangan gunakan async function terlalu banyak lebih baik gunakan callback/promise function
+- gunakan paralel request seperti child-process, atau bisa juga teknologi message broker (rabbit-mq , kafka, nsq , etc) / event driven
+- gunakan teknologi cluster (untuk enable multi threads pada nodejs)
+
+
+
+
+
+
+
+```
+
+</details>
+
+## ==== /STAGE 8 = MANUAL QUERY
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
 end video  04:24:41 [pagenation rekening done]
+
+stage 8 - update manual raw query SQL
+
 
  
 ## REFERENSI :
