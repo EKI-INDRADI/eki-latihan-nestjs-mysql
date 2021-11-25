@@ -2404,13 +2404,28 @@ fitur skip limit , find data & bearer maximum limit
   
 </details>
 
+
+<details>
+  <summary>20211125-0039-PRODUK-PAGENATION</summary>
+
+```bash
+/039
+
+update src\penjualan\dto\create-penjualan.dto.ts
+update src\penjualan\penjualan.service.ts
+update src\penjualan\penjualan.controller.ts
+
+```
+</details>
+
+
 ## ==== /STAGE 7 = PAGENATION
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  04:12:19 [pagenation produk done]
+next video  04:16:12 [pagenation penjualan done]
 
  
 ## REFERENSI :

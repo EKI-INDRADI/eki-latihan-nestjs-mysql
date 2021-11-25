@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
 import { PenjualanService } from './penjualan.service';
-import { CreatePenjualanDto, PenjualanId } from './dto/create-penjualan.dto';
+import { CreatePenjualanDto, FindPenjualanDto, PenjualanId } from './dto/create-penjualan.dto';
 import { UpdatePenjualanDto } from './dto/update-penjualan.dto';
-import { ApiBearerAuth, ApiBody, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { PenjualanProses } from './penjualan-proses.decorator';
 import { JwtGuard } from 'src/auth/jwt.guard';
+import { ResponProdukDto } from 'src/produk/dto/create-produk.dto';
 
 @ApiTags('Penjualan')
 @ApiBearerAuth()
@@ -20,8 +21,12 @@ export class PenjualanController {
   }
 
   @Get()
-  findAll() {
-    return this.penjualanService.findAll();
+  @ApiOkResponse({type : ResponProdukDto}) //pagenation
+  findAll(@Query() filter : FindPenjualanDto) { //pagenation
+    return this.penjualanService.findAll(filter);
+
+    // findAll() {
+    //   return this.penjualanService.findAll();
   }
 
   @Get(':id')
