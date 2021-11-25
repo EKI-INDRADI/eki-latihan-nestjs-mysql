@@ -70,10 +70,10 @@ export class FindPenjualanDto extends PageRequestDto {
     @IsOptional()
     no_faktur: string
 
-    @ApiProperty({required: false})
-    @IsDate()
-    @IsOptional()
-    tanggal: Date
+    // @ApiProperty({required: false}) // mabok pake like ?
+    // @IsDate()
+    // @IsOptional()
+    // tanggal: Date
 }
 
 

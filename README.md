@@ -2419,6 +2419,21 @@ update src\penjualan\penjualan.controller.ts
 </details>
 
 
+<details>
+  <summary>20211125-0040-KONSUMEN-PAGENATION</summary>
+
+```bash
+/040
+
+revisi update src\penjualan\dto\create-penjualan.dto.ts (pencarian tanggal tidak menggunakan like)
+update src\konsumen\dto\create-konsuman.dto.ts
+update src\konsumen\konsumen.service.ts
+update src\konsumen\konsumen.controller.ts
+
+```
+</details>
+
+
 ## ==== /STAGE 7 = PAGENATION
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari

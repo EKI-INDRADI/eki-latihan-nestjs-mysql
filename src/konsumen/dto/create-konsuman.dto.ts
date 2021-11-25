@@ -1,5 +1,6 @@
 import { ApiHideProperty, ApiProperty, OmitType, PickType } from "@nestjs/swagger"
-import { IsEmail, IsNotEmpty, IsObject, IsString } from "class-validator"
+import { IsEmail, IsNotEmpty, IsObject, IsOptional, IsString } from "class-validator"
+import { PageRequestDto, PageResponseDto } from "src/etc/dto/page-dto"
 import { IsExist } from "src/etc/validator/exist-validator"
 import { CreateUserDto } from "src/user/dto/create-user.dto"
 import { Konsuman } from "../entities/konsuman.entity"
@@ -38,3 +39,31 @@ export class KonsumenDto {
 // export class CreateKonsumanDto { }
 export class CreateKonsumanDto extends OmitType(KonsumenDto, ['id']) { } // buang id
 export class KonsumenId extends PickType(KonsumenDto, ['id']) { } // hanya ambil id
+
+export class FindKonsumenDto extends PageRequestDto{
+    @ApiProperty({required: false})
+    @IsString()
+    @IsOptional()
+    nama_konsumen: string
+
+    @ApiProperty({required: false})
+    @IsString()
+    @IsOptional()
+    alamat_konsumen: string
+
+    @ApiProperty({required: false})
+    @IsString()
+    @IsEmail()
+    @IsOptional()
+    email_konsumen: string
+
+    @ApiProperty({required: false})
+    @IsString()
+    @IsOptional()
+    no_hp_konsumen: string
+}
+
+export class ResponseKonsumenDto extends PageResponseDto{
+    @ApiProperty({type : [KonsumenDto]})
+    data : KonsumenDto[]
+}
