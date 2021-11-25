@@ -2440,7 +2440,7 @@ mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja p
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
 
-next video  04:16:12 [pagenation penjualan done]
+next video  04:19:04 [pagenation konsumen done]
 
  
 ## REFERENSI :
