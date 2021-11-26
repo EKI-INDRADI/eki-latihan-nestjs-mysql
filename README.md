@@ -2813,7 +2813,7 @@ buat manual src\produk\dto\produk-manual-query.dto.ts
 update src\produk\produk.controller.ts
 
 --- info
-agar muncul contoh paramter swagger
+agar muncul contoh parameter swagger
 example :
 {
   "condition": {
