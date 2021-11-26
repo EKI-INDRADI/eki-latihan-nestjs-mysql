@@ -2915,6 +2915,7 @@ semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung pa
 end video  04:24:41 [pagenation rekening done]
 
 stage 8 - update manual raw query SQL
+stage 9 - migrasi MySql to PostgreSql
 
 
  
