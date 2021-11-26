@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterc
 import { ProdukService } from './produk.service';
 import { CreateProdukDto, FindProdukDto, ProdukIdDto, ResponProdukDto } from './dto/create-produk.dto';
 import { UpdateProdukDto } from './dto/update-produk.dto';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiOkResponse, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtGuard } from 'src/auth/jwt.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -10,6 +10,7 @@ import { InjectUser } from 'src/etc/decorator/inject-user.decorator';
 // import { extname } from 'path/posix'; // rename 'path/posix' to 'path'
 import { extname } from 'path';
 import { Request } from 'express'; //MANUAL QUERY
+import { ProdukManualQueryDto } from './dto/produk-manual-query.dto';
 
 @ApiTags('Produk')
 @ApiBearerAuth()
@@ -97,7 +98,8 @@ export class ProdukController {
 
 
   @Post('/produk-manual-query')
-  @ApiBody({ type: Object })
+  // @ApiBody({ type: Object })
+  @ApiBody({ type: ProdukManualQueryDto })
   produkManualQuery(
     @Req()
     req: Request
@@ -116,7 +118,6 @@ export class ProdukController {
       "enable_manual_relation_user": 1
     }
 
-    // console.log(req.body)
     return this.produkService.GetProduk(req.body)
   }
 

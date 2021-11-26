@@ -2457,7 +2457,7 @@ update src\rekening\rekening.controller.ts
   <summary>20211125-0042-PRODUK-MANUAL-QUERY</summary>
 
 ```bash
-/041
+/042
 
 update src\produk\produk.service.ts
 
@@ -2798,6 +2798,33 @@ Jika ingin lebih cepat lagi
 
 
 
+```
+
+</details>
+
+
+<details>
+  <summary>20211126-0043-DTO-PRODUK-MANUAL-QUERY</summary>
+
+```bash
+/043
+
+buat manual src\produk\dto\produk-manual-query.dto.ts
+update src\produk\produk.controller.ts
+
+--- info
+agar muncul contoh paramter swagger
+example :
+{
+  "condition": {
+    "barcode": "string"
+  },
+  "skip": 0,
+  "limit": 10,
+  "enable_count": 1,
+  "enable_manual_relation_user": 1
+}
+--- /info
 ```
 
 </details>
