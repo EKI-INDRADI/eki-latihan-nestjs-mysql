@@ -3,7 +3,7 @@ import { IsNumber, IsObject } from "class-validator"
 
 export class ProdukManualQueryDto {
 
-    @ApiProperty()
+    @ApiProperty({ required: true})
     @IsObject()
     condition: {
         barcode: string

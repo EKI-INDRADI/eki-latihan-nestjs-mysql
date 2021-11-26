@@ -118,7 +118,8 @@ export class ProdukController {
       "enable_manual_relation_user": 1
     }
 
-    return this.produkService.GetProduk(req.body)
+
+   return this.produkService.GetProduk(req.body)
   }
 
 
