@@ -3078,11 +3078,11 @@ export class ProdukDto {
     foto: string
 ---/sebelum_1
 
----sesudah_2
+---sesudah_1
     @ApiProperty() 
     @IsOptional()
     foto: string
----/sesudah_2
+---/sesudah_1
 
 update src\produk\produk.controller.ts
 
