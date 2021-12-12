@@ -2919,8 +2919,36 @@ HASIL : https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
 /045
 
 MySql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mysql
+
 PostgreSql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql
+
 Mongodb (mongoose) Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
+
+
+
+RESPONSE :
+
+![EXAMPLE]()
+
+
+BENCHMARK :
+
+![EXAMPLE]()
+
+![EXAMPLE]()
+
+
+BENCHMARK NOTE :
+
+- backend ini sudah banyak menggunakan inject depedency dan perubahan middleware,
+
+- tidak seperti benchmark list pada https://github.com/fastify/benchmarks yang polos tanpa ada inject dependency
+
+- pada benchmark ini fastify adapter nestjs menunjukan kinerja 3x lipat lebih cepat dari express adapter nestjs
+
+- untuk jangka panjang saya belum test lebih lanjut, tetapi jika saya mendapatkan informasi lebih lanjut saya akan infokan pada github ini
+
+
 
 
 ---info
