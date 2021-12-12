@@ -2915,45 +2915,57 @@ HASIL : https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
 <details>
   <summary>20211212-0045-EXPRESS-TO-FASTIFY-ADAPTER</summary>
 
+  
+
 ```bash
 /045
+```
+
 
 MySql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mysql
+
 PostgreSql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql
+
 Mongodb (mongoose) Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
 
 
 
 RESPONSE :
 
-![EXAMPLE]()
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/blob/master/_BENCHMARK/AUTOCANNON_RESPONSE.png)
 
 
 BENCHMARK :
 
-![EXAMPLE]()
-![EXAMPLE]()
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/blob/master/_BENCHMARK/AUTOCANNON_1.png)
+
+![EXAMPLE](https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql/blob/master/_BENCHMARK/AUTOCANNON_2_3.png)
 
 
 BENCHMARK NOTE :
 
+```bash
 npm i autocannon -g
+
 autocannon -c 100 -d 40 -p 10 localhost:3000 ( express nestjs )
+
 autocannon -c 100 -d 40 -p 10 localhost:3001 ( fastify nestjs )
+```
 
 all result :
 https://github.com/fastify/benchmarks
 
 
 - backend ini sudah banyak menggunakan inject depedency dan perubahan middleware,
-- tidak seperti benchmark list pada https://github.com/fastify/benchmarks 
-yang polos tanpa ada inject dependency
-- pada benchmark ini fastify adapter nestjs menunjukan kinerja 3x lipat 
-lebih cepat dari express adapter nestjs
-- untuk jangka panjang saya belum test lebih lanjut, 
-tetapi jika saya mendapatkan informasi lebih lanjut saya akan infokan pada github ini
+
+- tidak seperti benchmark list pada https://github.com/fastify/benchmarks yang polos tanpa ada inject dependency
+
+- pada benchmark ini fastify adapter nestjs menunjukan kinerja 3x lipat lebih cepat dari express adapter nestjs
+
+- untuk jangka panjang saya belum test lebih lanjut, tetapi jika saya mendapatkan informasi lebih lanjut saya akan infokan pada github ini
 
 
+```bash
 
 ---info
 npm uninstall @nestjs/platform-express
