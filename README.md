@@ -2908,6 +2908,141 @@ HASIL : https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
 
 ## ==== /STAGE 9 = MIGRATION MYSQL TO POSTGRESQL TypeORM
 
+
+## ==== STAGE 10 = MIGRATION EXPRESS ADAPTER TO FASTIFY ADAPTER
+
+
+<details>
+  <summary>20211212-0045-EXPRESS-TO-FASTIFY-ADAPTER</summary>
+
+```bash
+/045
+
+MySql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mysql
+PostgreSql Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql
+Mongodb (mongoose) Fastify : https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
+
+
+---info
+npm uninstall @nestjs/platform-express
+npm i --save @nestjs/platform-fastify
+
+reference : 
+https://docs.nestjs.com/techniques/performance
+
+npm uninstall @nestjs/swagger swagger-ui-express
+npm install --save @nestjs/swagger fastify-swagger
+
+reference : 
+https://docs.nestjs.com/openapi/introduction
+
+
+//============================ MULTER NOT SUPPORT FASTIFY ADAPTER
+NOTE : https://docs.nestjs.com/techniques/file-upload (fastify tidak support multer multipart form data di nestjs)
+
+silahkan coba depedency alternative lain, 
+
+atau mungkin untuk file upload dapat menggunakan nestjs express secara terpisah, 
+
+toh jika tujuannya ingin membuat microservices, 
+
+memang seharusnya terpisah
+//============================ /MULTER NOT SUPPORT FASTIFY ADAPTER
+
+
+
+//====================================FASITFY BUG FIX
+
+---
+UnhandledPromiseRejectionWarning: TypeError: this.setInstance is not a function
+    at new FastifyAdapter (D:\_eki-latihan-nestjs-mysql-fastify\rnd-nestjs-mysql\node_modules\@nestjs\platform-fastify\adapters\fastify-adapter.js:72:14)
+    at bootstrap (D:\_eki-latihan-nestjs-mysql-fastify\rnd-nestjs-mysql\src\main.ts:13:5)
+    at Object.<anonymous> (D:\_eki-latihan-nestjs-mysql-fastify\rnd-nestjs-mysql\src\main.ts:55:1)
+    at Module._compile (internal/modules/cjs/loader.js:1068:30)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1097:10)
+    at Module.load (internal/modules/cjs/loader.js:933:32)
+    at Function.Module._load (internal/modules/cjs/loader.js:774:14)
+    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:72:12)
+    at internal/main/run_main_module.js:17:47
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:21788) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:21788) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+---
+
+
+npm update @nestjs/core  
+
+
+//====================================/FASITFY BUG FIX
+
+---/info
+
+---code
+update src\main.ts
+
+// const app = await NestFactory.create(AppModule); // OLD CODE
+
+const app = await NestFactory.create<NestFastifyApplication>( // FASTIFY
+  AppModule,
+  new FastifyAdapter()
+);
+
+// await app.listen(3000); // 127.0.0.1/localhost
+await app.listen(3000, '0.0.0.0'); // global ip
+
+
+update src\produk\produk.controller.ts
+
+---sebelumnya
+import { Request } from 'express'; //MANUAL QUERY ganti request express nya pake default nestJs aja
+
+  @Post('/produk-manual-query')
+  @ApiBody({ type: ProdukManualQueryDto })
+  produkManualQuery(
+    @Req()
+    req: Request
+  ): any {
+
+   return this.produkService.GetProduk(req.body)
+  }
+
+---/sebelumnya
+
+---sesudah
+// import { Request } from 'express'; //MANUAL QUERY ganti request express nya pake default nestJs aja
+
+  @Post('/produk-manual-query')
+  @ApiBody({ type: ProdukManualQueryDto })
+  produkManualQuery(
+    @Body()
+    req_body: ProdukManualQueryDto
+  ): any {
+
+   return this.produkService.GetProduk(req_body)
+  }
+---/sesudah
+
+
+//=========================== WAJIB REBUILD DIST FILE
+
+delete /dist files
+
+---- build kembali file /dist nya
+npm run build
+----
+//=========================== /WAJIB REBUILD DIST FILE
+
+
+---/code
+
+```
+
+</details>
+
+
+## ==== /STAGE 10 = MIGRATION EXPRESS ADAPTER TO FASTIFY ADAPTER
+
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
@@ -2916,7 +3051,7 @@ end video  04:24:41 [pagenation rekening done]
 
 stage 8 - update manual raw query SQL
 stage 9 - migrasi MySql to PostgreSql
-
+stage 10 - migrasi express adapter nestjs to fastify adapter nestjs
 
  
 ## REFERENSI :

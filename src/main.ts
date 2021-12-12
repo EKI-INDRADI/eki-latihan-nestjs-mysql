@@ -36,7 +36,7 @@ async function bootstrap() {
   }
   const swaggerDocument = SwaggerModule.createDocument(app, configSwagger)
 
-  fs.writeFileSync("./swagger-spec.json", JSON.stringify(swaggerDocument)); // generate swagger json
+  // fs.writeFileSync("./swagger-spec.json", JSON.stringify(swaggerDocument)); // generate swagger json
 
   SwaggerModule.setup('api-docs', app, swaggerDocument, configCustomSwagger)
   // api-docs = routes
