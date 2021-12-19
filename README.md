@@ -3180,6 +3180,111 @@ npm run build
 ## ==== /STAGE 10 = MIGRATION EXPRESS ADAPTER TO FASTIFY ADAPTER
 
 
+## ==== STAGE 11 = MIGRATION MYSQL TO MONGODB
+
+
+<details>
+  <summary>20211219-0046-MYSQL-TO-MONGODB</summary>
+
+```bash
+/046
+
+// ===================== MIGRATION MYSQL TO MONGODB
+1. install mongodb database
+
+2. create database simple_pos
+
+3. npm uninstall @nestjs/typeorm typeorm mysql2
+
+4. delete node_modules
+
+5. npm i
+
+6. npm install --save @nestjs/mongoose mongoose
+
+7. rubah .env 
+
+--- before
+
+MYSQL_HOST = '127.0.0.1'
+MYSQL_PORT = '3400'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'masuk123'
+MYSQL_DATABASE = 'simple_pos'
+JWT_SECRET_KEY= 'eki-secret-key'
+
+--- /before
+
+--- after
+
+MONGODB_HOST=127.0.0.1
+MONGODB_PORT=7000
+MONGODB_USER=root
+MONGODB_PASSWORD=masuk123
+MONGODB_DATABASE=simple_pos
+JWT_SECRET_KEY=eki-secret-key
+
+--- /after
+
+8. rubah code pada src\user\user.controller.ts
+// @ApiBearerAuth()
+// @UseGuards(JwtGuard)
+@Controller('user')
+
+------------------------
+
+pasangkan  
+
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
+
+pada setiap controller src\user\user.controller.ts , kecuali :
+
+@Post()
+create(@Body() ....
+...
+...
+
+untuk keperluan membuat account
+
+10. update src\app.module.ts
+11. update src\<resource_name>\dto\*
+12. update src\<resource_name>\entities\*
+13. update src\<resource_name>\<resource_name>.service.ts
+
+lalu buat pada http://localhost:3000/api-docs/
+POST /USER 
+{
+  "nama_user": "stringst",
+  "email": "string@mail.com",
+  "username": "stringst",
+  "password": "stringst"
+}
+
+
+//=========================== WAJIB REBUILD DIST FILE
+
+delete /dist files
+
+---- build kembali file /dist nya
+npm run build
+----
+
+//=========================== /WAJIB REBUILD DIST FILE
+
+15. selesai maka seluruh table akan otomatis terbuat, dan langsung dapat digunakan, persis seperti pada MySQL
+
+HASIL : https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
+
+// ===================== MIGRATION MYSQL TO MONGODB
+
+```
+
+</details>
+
+
+## ==== / STAGE 11 = MIGRATION MYSQL TO MONGODB
+
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
 semoga dokumentasi ini bermanfaat cukup liat setiap branch nya, akan langsung paham (sudah dibuat komentar code untuk di pahami juga)
@@ -3192,10 +3297,31 @@ stage 9 - migrasi MySql to PostgreSql
 
 stage 10 - migrasi express adapter nestjs to fastify adapter nestjs
 
+stage 11 - migrasi MySql (TypeORM) to Mongodb (Moongose) [INPROGRESS]
+
  
 ## REFERENSI :
 
+```bash
 NestJs (express) - MySQL - https://www.youtube.com/watch?v=WuGKMQpVQRA (thanks to Web App Project)
+
+https://nestjs.com/
+
+https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-phpmyadmin-mariadb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-mysql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mysql
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-postgresql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql 
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb (INPROGRESS)
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb (WAITING LIST)
+
+```
 
 ## EKI INDRADI
 
