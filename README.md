@@ -3283,6 +3283,21 @@ HASIL : https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
 </details>
 
 
+<details>
+  <summary>20211219-0046-MYSQL-TO-MONGODB-001</summary>
+
+```bash
+/046-001 USER & AUTH (AUTO GENERATE & AUTO SWAGGER & AUTO VALIDASI)
+
+update src\user\*
+update src\app.module.ts
+
+NOTE : migrasi perlahan karena depedency yang digunakan sedikit berbeda TypeORM != Mongoose
+
+```
+
+</details>
+
 ## ==== / STAGE 11 = MIGRATION MYSQL TO MONGODB
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
