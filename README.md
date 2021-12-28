@@ -3298,6 +3298,176 @@ NOTE : migrasi perlahan karena depedency yang digunakan sedikit berbeda TypeORM 
 
 </details>
 
+<details>
+  <summary>20211228-0046-MYSQL-TO-MONGODB-002</summary>
+
+
+```bash
+// AUTO GENERATE ARROW FUNCTION MONGOOSE
+
+    // =================== MONGOOSE PROGRESSIVE FRAMEWORK
+    @Prop({
+        type: Number,
+        default: () =>  
+            Number(Date.now()) // karena berupa arrow function maka Date.now() dibaca kembali ketika ada data masuk
+    })
+    id1: Number
+
+    @Prop({
+        type: Number,
+        default:Number(Date.now()) // Date.now() dibaca ketika backend running diawal value akan selalu sama
+    })
+    id2: Number
+ // =================== /MONGOOSE PROGRESSIVE FRAMEWORK
+```
+</details>
+
+<details>
+  <summary>20211228-0046-MYSQL-TO-MONGODB-003</summary>
+
+
+```bash
+// update custom validator IsUnique for Mongoose Version 
+// (sekaligus contoh inject connection mongoose)
+// berikut perbedaan dari IsUnique validator TypeORM Version MySql / PostgreSql
+
+update src\main.ts
+
+useContainer(app.select(AppModule), { fallbackOnErrors: true });  
+
+// masalah ini cukup lama menemukannya
+// ternyata harus menggunakan useContainer pada main.ts
+// bertujuan agar dapat menggunakan depedency / mongoose connection / service / etc
+// pada pada custom validator  
+
+update src\app.module.ts (enable isUnique)
+
+update src\user\dto\create-user.dto.ts (update code)
+
+update src\etc\validator\unique-validator.ts (update code)
+
+// version 1
+import { Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
+
+// version 2
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { User } from 'src/user/entities/user.entity';
+import { Model, Schema } from 'mongoose';
+
+// version 3
+import { Injectable } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
+
+note untuk version 3 perlu update src\user\user.service.ts
+
+export class UniqueValidator implements ValidatorConstraintInterface {
+  ...
+  ...
+
+    constructor(
+      // version 1
+      @InjectConnection() private MongoDbConnection: Connection,
+
+      // version 2
+      // @InjectModel(User.name) private userRepo: Model<User>,
+
+      // version 3
+      // private userService: UserService
+    ) { }
+    
+  ...
+  ...
+}
+
+
+async validate(value: any, args: ValidationArguments) {
+  ...
+  ...
+
+    //version 1 (menggunakan service)
+    check = await this.userService.manualQuery('findOne', findCondition)
+
+    //version 2 (menggunakan model repository)
+    check = await this.userRepo.findOne(findCondition);
+
+    //version 3 (menggunakan mongo conection langsung)
+    check = await this.MongoDbConnection.model(args.constraints[0]).findOne(findCondition)
+
+  ...
+  ...
+}
+
+hasil :
+
+
+{
+  "statusCode": 400,
+  "message": [
+    "email string5@mail.com sudah digunakan",
+    "username stringst5 sudah digunakan"
+  ],
+  "error": "Bad Request"
+}
+     
+reference : 
+https://stackoverflow.com/questions/60062318/how-to-inject-service-to-validator-constraint-interface-in-nestjs-using-class-va
+
+https://docs.nestjs.com/techniques/mongodb
+
+https://mongoosejs.com/docs/api.html#Connection
+
+```
+</details>
+
+
+<details>
+  <summary>20211228-0046-MYSQL-TO-MONGODB-004</summary>
+
+```bash
+// update custom validator IsExist for Mongoose Version 
+// (sekaligus contoh inject connection mongoose)
+// berikut perbedaan dari IsExist validator TypeORM Version MySql / PostgreSql
+
+update src\etc\validator\exist-validator.ts
+
+...
+...
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
+
+
+export class ExistValidator implements ValidatorConstraintInterface {
+    constructor(
+        @InjectConnection() private MongoDbConnection: Connection,
+    ) { }
+
+    async validate(value: any, args: ValidationArguments) {
+        let findCondition = { [args.constraints[1]]: args.value }
+        let check: any = null
+        check = await this.MongoDbConnection.model(args.constraints[0]).findOne(findCondition)
+        
+        if (check) return true
+        return false
+    }
+...
+...
+
+hasil : 
+{
+"statusCode": 400,
+"message": [
+  "id 202112283300602 tidak ditemukan" << contoh IsExists
+  ],
+  "error": "Bad Request"
+}
+
+```
+
+</details>
+
 ## ==== / STAGE 11 = MIGRATION MYSQL TO MONGODB
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
