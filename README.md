@@ -3673,7 +3673,9 @@ stage 9 - migrasi MySql to PostgreSql
 
 stage 10 - migrasi express adapter nestjs to fastify adapter nestjs
 
-stage 11 - migrasi MySql (TypeORM) to Mongodb (Moongose) [INPROGRESS]
+stage 11 - migrasi MySql (TypeORM) to Mongodb (Moongose) [DONE]
+
+stage 12 - migrasi express adapter nestjs Moongose to fastify adapter nestjs Moongose [INPROGRESS]
 
  
 ## REFERENSI :
@@ -3694,8 +3696,9 @@ https://github.com/EKI-INDRADI/eki-latihan-nestjs-postgresql
 https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-postgresql 
 
 https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb
-https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb (INPROGRESS)
-https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb (WAITING LIST)
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
+
 
 ```
 
