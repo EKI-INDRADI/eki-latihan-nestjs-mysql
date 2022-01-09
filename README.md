@@ -3659,6 +3659,133 @@ reference : https://docs.nestjs.com/openapi/types-and-parameters
 </details>
 
 
+<details>
+  <summary>20211230-0046-MYSQL-TO-MONGODB-006</summary>
+
+```bash
+
+update produk (sudah di migrasi menggunakan Mongoose dan
+fungsi sama persis dengan TypeORM)
+
+update src\produk\entities\produk.entity.ts
+
+update src\produk\produk.module.ts
+
+update src\produk\dto\create-produk.dto.ts
+
+update src\produk\dto\update-produk.dto.ts
+
+update src\produk\dto\produk-manual-query.dto.ts
+
+update src\produk\produk.service.ts
+
+update src\produk\produk.controller.ts
+
+update src\app.module.ts
+
+update src\etc\decorator\inject-user.decorator.ts
+
+update src\etc\dto\page-dto.ts
+
+```
+</details>
+
+
+<details>
+  <summary>20220102-0046-MYSQL-TO-MONGODB-007</summary>
+
+```bash
+
+update konsumen & rekening (sudah di migrasi menggunakan Mongoose dan
+fungsi sama persis dengan TypeORM)
+
+update src\konsumen\*  [done]
+update src\app.module.ts [done]
+
+update src\rekening\*  [done]
+update src\app.module.ts  [done]
+
+update src\penjualan\*  [inprogress] // perlu check auto schema relation
+update src\penjualan\*bayar*  [inprogress] // perlu check auto schema relation
+update src\penjualan\*item*  [inprogress] // perlu check auto schema relation
+update src\app.module.ts [inprogress] // perlu check auto schema relation
+
+
+
+```
+</details>
+
+
+<details>
+  <summary>20220108-0046-MYSQL-TO-MONGODB-008</summary>
+
+```bash
+update user payload (jwt login)
+update src\auth\auth.controller.ts
+update src\auth\auth.service.ts
+update src\auth\jwt.strategy.ts
+
+Inject user payload to req.body [DONE]
+
+update src\produk\dto\create-produk.dto.ts (ProdukDtoRelation + @ValidateNested())
+update src\penjualan\dto\penjualan-item.dto.ts ( @ValidateNested())
+update src\user\dto\create-user.dto.ts (UserDtoRelation + @ValidateNested())
+update src\penjualan\penjualan.controller.ts(@InjectUser() CreatePenjualanItemDto)
+
+Penjualan Item [DONE]
+
+
+update src\penjualan\dto\penjualan-bayar.dto.ts
+update src\penjualan\penjualan.controller.ts(@InjectUser() CreatePenjualanItemDto)
+
+Penjualan Bayar [PARTIAL DONE]
+
+update all dto 
+
+user: UserDto  -> user: UserDtoRelation (biar data lebih komplit)
+
+update src\produk\dto\create-produk.dto.ts
+update src\konsumen\dto\create-konsumen.dto.ts
+update src\konsumen\dto\update-konsumen.dto.ts
+update src\penjualan\dto\create-penjualan.dto.ts
+update src\rekening\dto\create-rekening.dto.ts
+
+Rekening [DONE]
+
+update src\penjualan\dto\penjualan-bayar.dto.ts
+update src\penjualan\penjualan.controller.ts(@InjectUser() CreatePenjualanBayarDto)
+
+Penjualan Bayar [DONE]
+
+
+next update terkahir Penjualan [INPROGRESS]
+
+```
+
+</details>
+
+
+
+<details>
+  <summary>20220109-0046-MYSQL-TO-MONGODB-009</summary>
+
+```bash
+
+update src\konsumen\dto\create-konsumen.dto.ts (KonsumenDtoRelation)
+update src\penjualan\dto\penjualan-item.dto.ts (PenjualanItemDtoRelation)
+update src\penjualan\dto\penjualan-bayar.dto.ts (PenjualanBayarDtoRelation)
+update src\penjualan\penjualan-proses.decorator.ts (inject PenjualanProses)
+
+example parameter penjualan :
+
+src\penjualan\dto\penjualan-item.dto.CreatePenjualanItemDto.ex.json
+src\penjualan\dto\penjualan-bayar.dto.CreatePenjualanBayarDto.ex.json
+src\penjualan\dto\create-penjualan.dto.CreatePenjualanDto.ex.json
+
+Finish
+```
+</details>
+
 ## ==== / STAGE 11 = MIGRATION MYSQL TO MONGODB
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
