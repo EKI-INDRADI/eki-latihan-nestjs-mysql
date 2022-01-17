@@ -4084,6 +4084,8 @@ npm run build
   <summary>20220117-0048-SQLITE-EXPRESS-CRUD-FILE-UPLOAD</summary>
 
 ```bash
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-sqlite-portable-file-upload
+
 database client menggunakan
 "Database Client for Visual Studio Code cweijan"
 cari extention "cweijan" pada extention visual studio code
@@ -4150,6 +4152,7 @@ NestJs (express) - MySQL - https://www.youtube.com/watch?v=WuGKMQpVQRA (thanks t
 
 https://nestjs.com/
 
+
 https://github.com/EKI-INDRADI/eki-latihan-vm-alpine-docker-portable
 
 https://github.com/EKI-INDRADI/eki-latihan-docker-phpmyadmin-mariadb
@@ -4164,6 +4167,12 @@ https://github.com/EKI-INDRADI/eki-latihan-docker-mongodb
 https://github.com/EKI-INDRADI/eki-latihan-nestjs-mongodb
 https://github.com/EKI-INDRADI/eki-latihan-nestjs-fastify-mongodb
 
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-http-module-rxjs-8
+
+https://github.com/EKI-INDRADI/eki-latihan-docker-rabbitmq
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-rabbitmq
+
+https://github.com/EKI-INDRADI/eki-latihan-nestjs-sqlite-portable-file-upload
 
 ```
 
