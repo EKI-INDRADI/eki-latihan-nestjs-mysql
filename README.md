@@ -4077,7 +4077,54 @@ npm run build
 
 ## ==== /STAGE 12 = MIGRATION MONGOOSE EXPRESS ADAPTER TO FASTIFY ADAPTER
 
+## ==== STAGE 13 = PORTABLE FILE UPLOAD UP TO 274k GB
 
+
+<details>
+  <summary>20220117-0048-SQLITE-EXPRESS-CRUD-FILE-UPLOAD</summary>
+
+```bash
+database client menggunakan
+"Database Client for Visual Studio Code cweijan"
+cari extention "cweijan" pada extention visual studio code
+atau menggunakan "SQLite Studio" https://sqlitestudio.pl/
+
+npm install @nestjs/serve-static (public folder)
+npm install sqlite3 --save
+
+
+https://www.sqlite.org/limits.html
+
+
+Maximum Database Size
+
+Every database consists of one or more "pages". Within a single database, every page is the same size, but different database can have page sizes that are powers of two between 512 and 65536, inclusive. The maximum size of a database file is 4294967294 pages. At the maximum page size of 65536 bytes, this translates into a maximum database size of approximately 1.4e+14 bytes (281 terabytes, or 256 tebibytes, or 281474 gigabytes or 256,000 gibibytes).
+
+This particular upper bound is untested since the developers do not have access to hardware capable of reaching this limit. However, tests do verify that SQLite behaves correctly and sanely when a database reaches the maximum file size of the underlying filesystem (which is usually much less than the maximum theoretical database size) and when a database is unable to grow due to disk space exhaustion.
+
+
+Note : 
+1 GiB = 1.073741824 GB
+256.000 GiB = -+ 274.878 GB
+
+keungulan database SQLite berbentuk file dah mudah dibuat synology server (auto backup)
+
+
+ketika di running selesai 
+file database akan otomatis terbuat dengan nama simple_pos 
+pada direktory ./simple_pos
+
+.env
+
+SQLITE_DATABASE = 'simple_pos'
+JWT_SECRET_KEY= 'eki-secret-key'
+
+
+```
+
+</details>
+
+## ==== /STAGE 13 = PORTABLE FILE UPLOAD UP TO 274k GB
 
 mohon maaf lama update, karena tidak memiliki banyak waktu karena saya bekerja pada salah 1 perusahaan startup dengan waktu kerja 11-12 jam per hari
 
